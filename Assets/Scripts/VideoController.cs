@@ -24,10 +24,15 @@ public class VideoController : MonoBehaviour
     #endregion
 
     #region UI Related
+    // Button image
     public Sprite playIcon;
     public Sprite stopIcon;
     public Image playButtonImage;
+
+    // formatted time text
     public Text TimeText;
+    public Slider volumeSlider;
+    // playback speed drop down
     public Dropdown pbSpeedDropDown;
     #endregion
 
@@ -50,21 +55,19 @@ public class VideoController : MonoBehaviour
     {
         Debug.Log("current speed:" + playbackSpeed);
         updateTimeText();
+        
     }
 
     // Set initial parameters
     void Setup()
     {
-        videoPlayer.Pause();
+        videoPlayer.Play();
         playbackSpeed = videoPlayer.playbackSpeed;
         videoDuration = (float)videoPlayer.clip.length;
-    }
-
-    // !Abandon
-    void AdjustPlaybackbyScroll(float scrollValue)
-    {
-        float newPlaybackSpeed = playbackSpeed + scrollValue * speedChangeRate;
-        SetPlaybackSpeed(newPlaybackSpeed);
+        Debug.Log("videoPlayer.GetDirectAudioVolume(0)" + videoPlayer.GetDirectAudioVolume(0));
+        //volumeSlider.value = videoPlayer.GetDirectAudioVolume(0);
+        Debug.Log("Volume: " + volumeSlider.value);
+        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
     }
 
     // As name
@@ -79,6 +82,19 @@ public class VideoController : MonoBehaviour
         string formattedTime = currentTimeS + " / " + totalTimeS;
 
         TimeText.text = formattedTime;
+    }
+
+    // As name
+    void OnVolumeChanged(float volume)
+    {
+        SetVolume(volume);
+    }
+
+    // Set volume
+    void SetVolume(float volume)
+    {
+        float mappedVolume = Mathf.Clamp01(volume);
+        videoPlayer.SetDirectAudioVolume(0, mappedVolume);
     }
 
     string FormatTime(float length)

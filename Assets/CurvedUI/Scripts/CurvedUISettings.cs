@@ -738,12 +738,14 @@ namespace CurvedUI
         /// </summary>
         public List<GameObject> GetObjectsUnderScreenPos(Vector2 pos, Camera eventCamera = null)
         {
-            if (eventCamera == null)
-                eventCamera = myCanvas.worldCamera;
+            //if (eventCamera == null)
+            //    eventCamera = myCanvas.worldCamera;
 
-            if (GetComponent<CurvedUIRaycaster>() != null)
-                return GetComponent<CurvedUIRaycaster>().GetObjectsUnderScreenPos(pos, eventCamera);
-            else return new List<GameObject>();
+            //if (GetComponent<CurvedUIRaycaster>() != null)
+            //    return GetComponent<CurvedUIRaycaster>().GetObjectsUnderScreenPos(pos, eventCamera);
+            //else return new List<GameObject>();
+
+            return new List<GameObject>();
         }
 
 
