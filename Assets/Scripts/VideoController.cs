@@ -61,7 +61,7 @@ public class VideoController : MonoBehaviour
     // Set initial parameters
     void Setup()
     {
-        videoPlayer.Play();
+        videoPlayer.Pause();
         playbackSpeed = videoPlayer.playbackSpeed;
         videoDuration = (float)videoPlayer.clip.length;
         Debug.Log("videoPlayer.GetDirectAudioVolume(0)" + videoPlayer.GetDirectAudioVolume(0));
