@@ -21,6 +21,8 @@ public class UIResize : MonoBehaviour
     private int limitStatus = 0;
     private Vector2 changedRectMax;
     private Vector2 changedRectMin;
+    private Vector2 changedRectMaxXMinY;
+    private Vector2 changedRectMaxYMinX;
     void Start()
     {
         rect = GetComponent<RectTransform>();
@@ -58,7 +60,7 @@ public class UIResize : MonoBehaviour
                 }
 
                 //
-                if (deltaData.x < -500.0f)
+                if (deltaData.x < -500.0f || deltaData.x > 500.0f)
                 {
                     limitStatus++;
                     changedRectMax.x = maxWidth / 2;
@@ -69,15 +71,85 @@ public class UIResize : MonoBehaviour
                 break;
 
             case 2:
-                
+                changedRectMaxXMinY = new Vector2(rect.offsetMax.x + deltaData.x, rect.offsetMin.y + deltaData.y);
+                Debug.Log("changedRectMin: " + changedRectMaxXMinY);
+                Debug.Log("deltaData: " + deltaData);
+
+                if (changedRectMaxXMinY.x < minWidth / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxXMinY.x = minWidth / 2;
+                }
+                else if (changedRectMaxXMinY.x > maxWidth / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxXMinY.x = maxWidth / 2;
+                }
+                if (changedRectMaxXMinY.y > -minHeight / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxXMinY.y = -minHeight / 2;
+                }
+                else if (changedRectMaxXMinY.y < -maxHeight / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxXMinY.y = -maxHeight / 2;
+                }
+
+                //
+                if (deltaData.x < -500.0f || deltaData.x > 500.0f)
+                {
+                    limitStatus++;
+                    changedRectMaxXMinY.x = maxWidth / 2;
+                    limitStatus++;
+                    changedRectMaxXMinY.y = -maxHeight / 2;
+                }
+
+                rect.offsetMax = new Vector2(changedRectMaxXMinY.x, rect.offsetMax.y);
+                rect.offsetMin = new Vector2(rect.offsetMin.x, changedRectMaxXMinY.y);
+                Debug.Log("changedRectMinFinal: " + changedRectMaxXMinY);
                 break;
             case 3:
-                
+                changedRectMaxYMinX = new Vector2(rect.offsetMin.x + deltaData.x, rect.offsetMax.y + deltaData.y);
+                Debug.Log("changedRectMin: " + changedRectMaxYMinX);
+                Debug.Log("deltaData: " + deltaData);
+
+                if (changedRectMaxYMinX.x > -minWidth / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxYMinX.x = -minWidth / 2;
+                }
+                else if (changedRectMaxYMinX.x < -maxWidth / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxYMinX.x = -maxWidth / 2;
+                }
+                if (changedRectMaxYMinX.y < minHeight / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxYMinX.y = minHeight / 2;
+                }
+                else if (changedRectMaxYMinX.y > maxHeight / 2)
+                {
+                    limitStatus++;
+                    changedRectMaxYMinX.y = maxHeight / 2;
+                }
+
+                //
+                if (deltaData.x < -500.0f || deltaData.x > 500.0f)
+                {
+                    limitStatus++;
+                    changedRectMaxYMinX.x = -maxWidth / 2;
+                    limitStatus++;
+                    changedRectMaxYMinX.y = maxHeight / 2;
+                }
+
+                rect.offsetMax = new Vector2(rect.offsetMax.x, changedRectMaxYMinX.y);
+                rect.offsetMin = new Vector2(changedRectMaxYMinX.x, rect.offsetMin.y);
+                Debug.Log("changedRectMinFinal: " + changedRectMaxYMinX);
                 break;
             case 4:
                 changedRectMin = rect.offsetMin + deltaData / 2;
-                Debug.Log("changedRectMin: " + changedRectMin);
-                Debug.Log("deltaData: " + deltaData);
 
                 if (changedRectMin.x > -minWidth / 2)
                 {
@@ -109,7 +181,6 @@ public class UIResize : MonoBehaviour
                     changedRectMin.y = -maxHeight / 2;
                 }
                 rect.offsetMin = changedRectMin;
-                Debug.Log("changedRectMinFinal: " + changedRectMin);
 
                 break;
 

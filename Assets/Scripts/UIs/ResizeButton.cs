@@ -26,28 +26,7 @@ public class ResizeButton : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
     }
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        switch (uIResize.cornerType)
-        {
-            case 0:
-                break;
-            case 1:
-                uIResize.ResizeCanvas(eventData.delta);
-                break;
-
-            case 2:
-                rect.offsetMax = new Vector2(rect.offsetMax.x + eventData.delta.x, rect.offsetMax.y);
-                rect.offsetMin = new Vector2(rect.offsetMin.x, rect.offsetMin.y + eventData.delta.y);
-                break;
-            case 3:
-                rect.offsetMax = rect.offsetMax + eventData.delta;
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
-                break;
-            case 4:
-                uIResize.ResizeCanvas(eventData.delta);
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
-                break;
-
-        }
+        uIResize.ResizeCanvas(eventData.delta);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
