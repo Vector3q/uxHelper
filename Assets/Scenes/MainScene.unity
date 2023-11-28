@@ -798,6 +798,7 @@ GameObject:
   - component: {fileID: 238346657}
   - component: {fileID: 238346656}
   - component: {fileID: 238346655}
+  - component: {fileID: 238346659}
   m_Layer: 5
   m_Name: BottomRight
   m_TagString: Untagged
@@ -937,6 +938,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238346653}
   m_CullTransparentMesh: 1
+--- !u!114 &238346659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238346653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daa5f9265d420e40ab02121f102e4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1847331155}
+  thisType: 2
 --- !u!1 &288856098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5519807743346592589, guid: c89b2c4e711f8a14ba3df7e4b3c71f12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.275
+      value: -1.39
       objectReference: {fileID: 0}
     - target: {fileID: 5519807743346592589, guid: c89b2c4e711f8a14ba3df7e4b3c71f12, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2700,6 +2715,8 @@ GameObject:
   - component: {fileID: 984859401}
   - component: {fileID: 984859400}
   - component: {fileID: 984859403}
+  - component: {fileID: 984859404}
+  - component: {fileID: 984859405}
   m_Layer: 5
   m_Name: TopRight
   m_TagString: Untagged
@@ -2839,6 +2856,49 @@ PolygonCollider2D:
       - {x: 33, y: 33}
       - {x: 33, y: -41}
       - {x: 41, y: -41}
+--- !u!114 &984859404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984859398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3daa5f9265d420e40ab02121f102e4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1847331155}
+  thisType: 1
+--- !u!114 &984859405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984859398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1847331153}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1148234866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4512,6 +4572,7 @@ GameObject:
   - component: {fileID: 1847331156}
   - component: {fileID: 1847331154}
   - component: {fileID: 1847331159}
+  - component: {fileID: 1847331160}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4633,6 +4694,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13c10202b5186444b6a87ea98d6060b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1847331160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847331153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1420702c8edc1284c94d6462c2879f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topLeftButton: {fileID: 0}
+  topRightButton: {fileID: 0}
+  bottomLeftButton: {fileID: 0}
+  bottomRightButton: {fileID: 0}
+  cornerType: 0
+  maxWidth: 1800
+  maxHeight: 1200
+  minWidth: 300
+  minHeight: 200
 --- !u!4 &1929738128 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4919022601422836097, guid: d93b7e04b48cd7b4fa849695dba2ce9c, type: 3}
