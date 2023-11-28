@@ -31,9 +31,7 @@ public class ResizeButton : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
             case 0:
                 break;
             case 1:
-                uIResize.exceedLimitSize(eventData.delta);
-                //rect.offsetMax = rect.offsetMax + eventData.delta;
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
+                uIResize.ResizeCanvas(eventData.delta);
                 break;
 
             case 2:
@@ -45,7 +43,7 @@ public class ResizeButton : MonoBehaviour, IDragHandler, IPointerDownHandler, IP
                 //Debug.Log("rect.offsetMax: " + rect.offsetMax);
                 break;
             case 4:
-                rect.offsetMax = rect.offsetMax + eventData.delta;
+                uIResize.ResizeCanvas(eventData.delta);
                 //Debug.Log("rect.offsetMax: " + rect.offsetMax);
                 break;
 
