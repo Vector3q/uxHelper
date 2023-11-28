@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class UIResize : MonoBehaviour, IDragHandler
+public class UIResize : MonoBehaviour
 {
     private RectTransform rect;//拖拽对象的矩形对象
     public Button topLeftButton;
@@ -15,8 +15,8 @@ public class UIResize : MonoBehaviour, IDragHandler
     public float maxWidth = 1800;
     public float maxHeight = 1200;
 
-    public float minWidth = 300;
-    public float minHeight = 200;
+    public float minWidth = 150;
+    public float minHeight = 100;
 
     private int limitStatus = 0;
     private Vector2 changedRectMax;
@@ -33,35 +33,35 @@ public class UIResize : MonoBehaviour, IDragHandler
         rect.sizeDelta = new Vector2(Mathf.Abs(mousePosition.x) * 2, Mathf.Abs(mousePosition.y) * 2);
     }
 
-    void IDragHandler.OnDrag(PointerEventData eventData)
-    {
-        switch (cornerType)
-        {
-            case 0:
-                break;
-            case 1:
-                exceedLimitSize(eventData.delta);
-                //rect.offsetMax = rect.offsetMax + eventData.delta;
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
-                break;
+    //void IDragHandler.OnDrag(PointerEventData eventData)
+    //{
+    //    switch (cornerType)
+    //    {
+    //        case 0:
+    //            break;
+    //        case 1:
+    //            exceedLimitSize(eventData.delta);
+    //            //rect.offsetMax = rect.offsetMax + eventData.delta;
+    //            //Debug.Log("rect.offsetMax: " + rect.offsetMax);
+    //            break;
 
-            case 2:
-                rect.offsetMax = new Vector2(rect.offsetMax.x + eventData.delta.x, rect.offsetMax.y);
-                rect.offsetMin = new Vector2(rect.offsetMin.x, rect.offsetMin.y + eventData.delta.y);
-                break;
-            case 3:
-                rect.offsetMax = rect.offsetMax + eventData.delta;
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
-                break;
-            case 4:
-                rect.offsetMax = rect.offsetMax + eventData.delta;
-                //Debug.Log("rect.offsetMax: " + rect.offsetMax);
-                break;
+    //        case 2:
+    //            rect.offsetMax = new Vector2(rect.offsetMax.x + eventData.delta.x, rect.offsetMax.y);
+    //            rect.offsetMin = new Vector2(rect.offsetMin.x, rect.offsetMin.y + eventData.delta.y);
+    //            break;
+    //        case 3:
+    //            rect.offsetMax = rect.offsetMax + eventData.delta;
+    //            //Debug.Log("rect.offsetMax: " + rect.offsetMax);
+    //            break;
+    //        case 4:
+    //            rect.offsetMax = rect.offsetMax + eventData.delta;
+    //            //Debug.Log("rect.offsetMax: " + rect.offsetMax);
+    //            break;
 
-        }
-    }
+    //    }
+    //}
 
-    void exceedLimitSize(Vector2 deltaData)
+    public void exceedLimitSize(Vector2 deltaData)
     {
         limitStatus = 0;
         changedRectMax = rect.offsetMax + deltaData/2;
