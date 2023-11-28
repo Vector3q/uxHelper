@@ -64,7 +64,7 @@ public class UIResize : MonoBehaviour, IDragHandler
     void exceedLimitSize(Vector2 deltaData)
     {
         limitStatus = 0;
-        changedRectMax = rect.offsetMax + deltaData;
+        changedRectMax = rect.offsetMax + deltaData/2;
 
         
 

@@ -4711,8 +4711,8 @@ MonoBehaviour:
   bottomLeftButton: {fileID: 0}
   bottomRightButton: {fileID: 0}
   cornerType: 0
-  maxWidth: 1800
-  maxHeight: 1200
+  maxWidth: 1200
+  maxHeight: 800
   minWidth: 300
   minHeight: 200
 --- !u!4 &1929738128 stripped
