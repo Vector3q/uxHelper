@@ -18,7 +18,9 @@ public class VideoController : MonoBehaviour
     private float skipTime = 10.0f;
     // total time of current video duration
     private float videoDuration;
-
+    private float changedSecond;
+    private float subTime;
+    public GameObject fillPrefab;
 
 
     #endregion
@@ -34,6 +36,9 @@ public class VideoController : MonoBehaviour
     public Slider volumeSlider;
     // playback speed drop down
     public Dropdown pbSpeedDropDown;
+    public Slider playSlider;
+    public Button scissorsButton;
+    PlayerSlider playerSlider;
     #endregion
 
 
@@ -43,19 +48,28 @@ public class VideoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        changedSecond = 0f;
         videoPlayer = GetComponent<VideoPlayer>();
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
+        playerSlider = playSlider.GetComponent<PlayerSlider>();
+        playSlider.onValueChanged.AddListener( value => { if (subTime > 0.005f)  videoPlayer.time = value * videoDuration; Debug.Log("subTime:"+subTime);  });
         Setup();
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("current speed:" + playbackSpeed);
         updateTimeText();
-        
+
+        scissorsButton.transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
+        //videoPlayer.time = playerSlider.getSliderValue() * videoDuration;
+        subTime = Mathf.Abs(playerSlider.getSliderValue() - changedSecond);
+
+
+        if (subTime < 0.005f )
+            playerSlider.setSliderValue((float)videoPlayer.time / videoDuration);
+        changedSecond = playerSlider.getSliderValue();
     }
 
     // Set initial parameters
@@ -64,9 +78,9 @@ public class VideoController : MonoBehaviour
         videoPlayer.Pause();
         playbackSpeed = videoPlayer.playbackSpeed;
         videoDuration = (float)videoPlayer.clip.length;
-        Debug.Log("videoPlayer.GetDirectAudioVolume(0)" + videoPlayer.GetDirectAudioVolume(0));
+        //Debug.Log("videoPlayer.GetDirectAudioVolume(0)" + videoPlayer.GetDirectAudioVolume(0));
         //volumeSlider.value = videoPlayer.GetDirectAudioVolume(0);
-        Debug.Log("Volume: " + volumeSlider.value);
+        //Debug.Log("Volume: " + volumeSlider.value);
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
     }
 
@@ -144,7 +158,6 @@ public class VideoController : MonoBehaviour
     // Listen to change of dropdown and Change the speed of playback
     void SelectPlaybackSpeed(int index)
     {
-        Debug.Log("Selected Option: " + pbSpeedDropDown.options[index].text);
         if(pbSpeedDropDown.options[index].text == "normal")
         {
             videoPlayer.playbackSpeed = 1;
@@ -166,6 +179,25 @@ public class VideoController : MonoBehaviour
     void SetPlayTime(double newTime)
     {
         videoPlayer.time = newTime;
+    }
+
+    void CreateFillPrefab()
+    {
+        if (playSlider != null && fillPrefab != null)
+        {
+            // 获取 Slider 的填充区域 RectTransform
+            RectTransform fillRect = playSlider.fillRect.GetComponent<RectTransform>();
+
+            // 实例化预制体
+            GameObject newObject = Instantiate(fillPrefab);
+
+            // 设置新物体的父对象为 Slider，确保它跟随 Slider 移动
+            newObject.transform.SetParent(playSlider.transform, false);
+
+            // 设置新物体的位置与大小与填充区域一致
+            newObject.transform.position = fillRect.position;
+            newObject.transform.localScale = new Vector2(fillRect.sizeDelta.x, fillRect.sizeDelta.y);
+        }
     }
 
     
