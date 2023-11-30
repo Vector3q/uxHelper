@@ -20,7 +20,7 @@ public class VideoController : MonoBehaviour
     private float videoDuration;
     private float changedSecond;
     private float subTime;
-    public GameObject fillPrefab;
+    
 
 
     #endregion
@@ -52,7 +52,7 @@ public class VideoController : MonoBehaviour
         videoPlayer = GetComponent<VideoPlayer>();
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
         playerSlider = playSlider.GetComponent<PlayerSlider>();
-        playSlider.onValueChanged.AddListener( value => { if (subTime > 0.005f)  videoPlayer.time = value * videoDuration; Debug.Log("subTime:"+subTime);  });
+        playSlider.onValueChanged.AddListener( value => { if (subTime > 0.005f)  videoPlayer.time = value * videoDuration;});
         Setup();
         
     }
@@ -181,24 +181,7 @@ public class VideoController : MonoBehaviour
         videoPlayer.time = newTime;
     }
 
-    void CreateFillPrefab()
-    {
-        if (playSlider != null && fillPrefab != null)
-        {
-            // 获取 Slider 的填充区域 RectTransform
-            RectTransform fillRect = playSlider.fillRect.GetComponent<RectTransform>();
-
-            // 实例化预制体
-            GameObject newObject = Instantiate(fillPrefab);
-
-            // 设置新物体的父对象为 Slider，确保它跟随 Slider 移动
-            newObject.transform.SetParent(playSlider.transform, false);
-
-            // 设置新物体的位置与大小与填充区域一致
-            newObject.transform.position = fillRect.position;
-            newObject.transform.localScale = new Vector2(fillRect.sizeDelta.x, fillRect.sizeDelta.y);
-        }
-    }
+    
 
     
 }

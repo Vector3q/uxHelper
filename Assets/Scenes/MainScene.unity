@@ -4420,7 +4420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -4.16, y: 0}
+  m_AnchoredPosition: {x: -4.159973, y: 0}
   m_SizeDelta: {x: -8.32, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1670502132
@@ -4691,7 +4691,6 @@ MonoBehaviour:
   videoPlayer: {fileID: 0}
   speedChangeRate: 0.1
   playbackSpeed: 0
-  fillPrefab: {fileID: 0}
   playIcon: {fileID: 21300000, guid: b7a4e8c5ff3b701448336eccff69f027, type: 3}
   stopIcon: {fileID: 21300000, guid: a81231e753d792f48acad5b5534da7a2, type: 3}
   playButtonImage: {fileID: 41742258}
@@ -4907,6 +4906,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CuttingState: 0
+  startValue: 0
+  endValue: 0
+  playSlider: {fileID: 1993133059}
 --- !u!1 &1740890340
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,8 +5420,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 5.25, y: -1}
-  m_SizeDelta: {x: -0.86, y: 39.9}
+  m_AnchoredPosition: {x: 2.4249878, y: -1}
+  m_SizeDelta: {x: 4.85, y: 39.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993133059
 MonoBehaviour:
@@ -5486,6 +5488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainVideo: {fileID: 1697316529}
   playSlider: {fileID: 0}
+  fillPrefab: {fileID: 6089050326116892594, guid: 37f9f5df24d85a24d9faadb43636896f, type: 3}
+  fill: {fileID: 1670502130}
 --- !u!1 &2044835903
 GameObject:
   m_ObjectHideFlags: 0

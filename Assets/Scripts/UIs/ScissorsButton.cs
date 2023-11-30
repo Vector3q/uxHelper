@@ -8,14 +8,17 @@ public class ScissorsButton : MonoBehaviour
     public int CuttingState = 0;
     Button scissorsButton;
     CustomImage scissorsImageScript;
-    Slider playSlider;
+    public float startValue;
+    public float endValue;
+    public Slider playSlider;
+
     // Start is called before the first frame update
     void Start()
     {
         scissorsButton = GetComponent<Button>();
         scissorsImageScript = GetComponent<CustomImage>();
         scissorsButton.onClick.AddListener(ScissorsButtonClick);
-        playSlider = GetComponentInParent<Slider>();
+
     }
 
     // Update is called once per frame
@@ -28,12 +31,18 @@ public class ScissorsButton : MonoBehaviour
     {
         if (CuttingState == 0)
         {
-            CuttingState++;
+            CuttingState=1;
             scissorsImageScript.color = Color.green;
+            startValue = playSlider.value;
         }
-
-
-        
+        else if (CuttingState == 1)
+        {
+            CuttingState=0;
+            scissorsImageScript.color = Color.white;
+            endValue = playSlider.value; 
+            Debug.Log("start-end: "+ startValue + ", " + endValue);
+            playSlider.GetComponent<PlayerSlider>().CreateFillPrefab(startValue, endValue);
+        }
     }
 
 
