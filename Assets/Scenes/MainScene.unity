@@ -4780,7 +4780,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -439.2, y: 27.999977}
-  m_SizeDelta: {x: 26, y: 80}
+  m_SizeDelta: {x: 26, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1730630423
 MonoBehaviour:
@@ -5299,6 +5299,7 @@ MonoBehaviour:
   bottomLeftButton: {fileID: 0}
   bottomRightButton: {fileID: 0}
   cornerType: 0
+  width: 0
   maxWidth: 1200
   maxHeight: 800
   minWidth: 200
@@ -5490,6 +5491,7 @@ MonoBehaviour:
   playSlider: {fileID: 0}
   fillPrefab: {fileID: 6089050326116892594, guid: 37f9f5df24d85a24d9faadb43636896f, type: 3}
   fill: {fileID: 1670502130}
+  canvas: {fileID: 1847331155}
 --- !u!1 &2044835903
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ public class ScissorsButton : MonoBehaviour
             endValue = playSlider.value; 
             Debug.Log("start-end: "+ startValue + ", " + endValue);
             playSlider.GetComponent<PlayerSlider>().CreateFillPrefab(startValue, endValue);
+            Debug.Log("start-end: " + startValue + ", " + endValue);
         }
     }
 

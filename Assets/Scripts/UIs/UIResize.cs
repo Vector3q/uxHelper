@@ -12,6 +12,8 @@ public class UIResize : MonoBehaviour
     public Button bottomRightButton;
     public int cornerType = 0;
 
+    public float width;
+
     public float maxWidth = 1800;
     public float maxHeight = 1200;
 
@@ -26,7 +28,7 @@ public class UIResize : MonoBehaviour
     void Start()
     {
         rect = GetComponent<RectTransform>();
-
+        width = rect.offsetMax.x * 2;
     }
 
     public void ResizeCanvas(Vector2 deltaData)
@@ -68,12 +70,11 @@ public class UIResize : MonoBehaviour
                     changedRectMax.y = maxHeight / 2;
                 }
                 rect.offsetMax = changedRectMax;
+                
                 break;
 
             case 2:
                 changedRectMaxXMinY = new Vector2(rect.offsetMax.x + deltaData.x, rect.offsetMin.y + deltaData.y);
-                Debug.Log("changedRectMin: " + changedRectMaxXMinY);
-                Debug.Log("deltaData: " + deltaData);
 
                 if (changedRectMaxXMinY.x < minWidth / 2)
                 {
@@ -107,12 +108,9 @@ public class UIResize : MonoBehaviour
 
                 rect.offsetMax = new Vector2(changedRectMaxXMinY.x, rect.offsetMax.y);
                 rect.offsetMin = new Vector2(rect.offsetMin.x, changedRectMaxXMinY.y);
-                Debug.Log("changedRectMinFinal: " + changedRectMaxXMinY);
                 break;
             case 3:
                 changedRectMaxYMinX = new Vector2(rect.offsetMin.x + deltaData.x, rect.offsetMax.y + deltaData.y);
-                Debug.Log("changedRectMin: " + changedRectMaxYMinX);
-                Debug.Log("deltaData: " + deltaData);
 
                 if (changedRectMaxYMinX.x > -minWidth / 2)
                 {
@@ -146,7 +144,6 @@ public class UIResize : MonoBehaviour
 
                 rect.offsetMax = new Vector2(rect.offsetMax.x, changedRectMaxYMinX.y);
                 rect.offsetMin = new Vector2(changedRectMaxYMinX.x, rect.offsetMin.y);
-                Debug.Log("changedRectMinFinal: " + changedRectMaxYMinX);
                 break;
             case 4:
                 changedRectMin = rect.offsetMin + deltaData / 2;
@@ -181,14 +178,9 @@ public class UIResize : MonoBehaviour
                     changedRectMin.y = -maxHeight / 2;
                 }
                 rect.offsetMin = changedRectMin;
-
                 break;
 
         }
-        
-
-
-       
-
+        width = rect.offsetMax.x - rect.offsetMin.x;
     }
 }
