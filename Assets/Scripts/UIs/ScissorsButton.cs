@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ScissorsButton : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class ScissorsButton : MonoBehaviour
     public float startValue;
     public float endValue;
     public Slider playSlider;
+    public Image buttonImage;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,7 @@ public class ScissorsButton : MonoBehaviour
         scissorsButton = GetComponent<Button>();
         scissorsImageScript = GetComponent<CustomImage>();
         scissorsButton.onClick.AddListener(ScissorsButtonClick);
-
+        buttonImage = GetComponent<CustomImage>();
     }
 
     // Update is called once per frame
@@ -26,6 +29,7 @@ public class ScissorsButton : MonoBehaviour
     {
         
     }
+
 
     void ScissorsButtonClick()
     {

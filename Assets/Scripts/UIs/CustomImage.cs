@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CustomImage : Image
 {
     private PolygonCollider2D _polygon;
-
     private PolygonCollider2D Polygon
     {
         get
