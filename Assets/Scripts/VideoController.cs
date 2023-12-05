@@ -62,7 +62,6 @@ public class VideoController : MonoBehaviour
     {
         updateTimeText();
 
-        scissorsButton.transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
         //videoPlayer.time = playerSlider.getSliderValue() * videoDuration;
         subTime = Mathf.Abs(playerSlider.getSliderValue() - changedSecond);
 

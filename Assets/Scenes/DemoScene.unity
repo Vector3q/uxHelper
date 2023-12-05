@@ -1629,7 +1629,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 179.99997, y: 18}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.46484375, y: 0.033203125, z: 0, w: 0}
+  savedTextUV0: {x: 0.0234375, y: 0.11328125, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &876656130
 MonoBehaviour:
@@ -1648,7 +1648,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 179.99997, y: 18}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.3359375, y: 0.099609375, z: 0, w: 0}
+  savedTextUV0: {x: 0.25390625, y: 0, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &876656131
 MonoBehaviour:
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 160, y: 30}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.2421875, y: 0.14648438, z: 0, w: 0}
+  savedTextUV0: {x: 0.15234375, y: 0.05078125, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &876656135
 MonoBehaviour:
@@ -1781,7 +1781,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 262.1, y: 48}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.2421875, y: 0.0078125, z: 0, w: 0}
+  savedTextUV0: {x: 0.05078125, y: 0, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &876656138
 MonoBehaviour:
@@ -1800,7 +1800,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 181, y: 33.5}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.06640625, y: 0, z: 0, w: 0}
+  savedTextUV0: {x: 0.09375, y: 0.09375, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &876656139
 MonoBehaviour:
@@ -3336,7 +3336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2e569dc832500047bf4350b4dae9b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlMethod: 0
+  controlMethod: 5
   submitButtonName: Fire1
   mainEventCamera: {fileID: 0}
   raycastLayerMask:
@@ -3349,6 +3349,9 @@ MonoBehaviour:
   worldSpaceMouseSensitivity: 1
   usedHand: 1
   pointerTransformOverride: {fileID: 0}
+  TouchControllerTransform: {fileID: 0}
+  InteractionButton: 8192
+  oculusCameraRig: {fileID: 0}
   rightXRController: {fileID: 0}
   leftXRController: {fileID: 0}
 --- !u!1 &1740969850
