@@ -5,10 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
+    
     private Image buttonImage;
     public bool HoverToChangeAlpha;
+    public bool HoverToChangeAllChildrenAlpha;
     public bool HoverToDisplayCircleBG;
     public bool PointerUpToDisplay;
+    public bool ClickToChangeIcon;
+    public Sprite UnClickedIcon;
+    public Sprite ClikedIcon;
+
+
+
     private Transform circleBG;
     private bool IsClick;
     // Start is called before the first frame update
