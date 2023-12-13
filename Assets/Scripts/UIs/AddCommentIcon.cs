@@ -16,7 +16,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Sprite AfterclickedSprite;
     public GameObject textPanel;
 
-
+    
 
     private AudioClip clip;
     private byte[] bytes;
