@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+
 
 [Serializable]
 public struct Data
@@ -34,7 +36,7 @@ public struct Data
                         public string wp;
                     }
 
-                    public CW[] cw;
+                    [SerializeField] public CW[] cw;
 
                     /// <summary>
                     /// 词在本句中的开始时间，单位是帧，1帧=10ms  即词在整段语音中的开始时间为(bg+wb*10)ms
@@ -49,10 +51,10 @@ public struct Data
                     public string we;
                 }
 
-                public WS[] ws;
+                [SerializeField] public WS[] ws;
             }
 
-            public RT rt;
+            [SerializeField] public RT[] rt;
 
             /// <summary>
             /// 句子在整段语音中的开始时间，单位毫秒(ms)
@@ -72,13 +74,18 @@ public struct Data
             public string ed;
         }
 
-        public ST st;
+        [SerializeField] public ST st;
     }
 
-    public CN cn;
+    [SerializeField] public CN cn;
 
     /// <summary>
     /// 
     /// </summary>
     public string ls;
+
+    public override string ToString()
+    {
+        return string.Format("seg_id:{0}, cn:{1}, ls:{2}", seg_id.ToString(), cn.ToString(), ls.ToString());
+    }
 }

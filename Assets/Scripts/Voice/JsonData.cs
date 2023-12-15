@@ -16,7 +16,7 @@ public struct JsonData
     /// <summary>
     /// 转写结果数据
     /// </summary>
-    public Data data;
+    public string data;
 
     /// <summary>
     /// 描述

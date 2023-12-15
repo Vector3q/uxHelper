@@ -6165,6 +6165,7 @@ GameObject:
   - component: {fileID: 1763190170}
   - component: {fileID: 1763190173}
   - component: {fileID: 1763190174}
+  - component: {fileID: 1763190175}
   m_Layer: 5
   m_Name: AddComment
   m_TagString: Untagged
@@ -6314,6 +6315,21 @@ MonoBehaviour:
   BeforeclickedSprite: {fileID: 21300000, guid: d25313e4926a18d49b127915fb192973, type: 3}
   AfterclickedSprite: {fileID: 21300000, guid: 0e5f77c72e19ec4478fdc71b569554a5, type: 3}
   textPanel: {fileID: 704988268}
+  rtv: {fileID: 1763190175}
+--- !u!114 &1763190175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763190168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd863c6188101044b042b4fa53a16af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeechRecognitionText: {fileID: 882066501}
+  RecordedClip: {fileID: 0}
 --- !u!1 &1824430647
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,12 +15,13 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Sprite BeforeclickedSprite;
     public Sprite AfterclickedSprite;
     public GameObject textPanel;
+    public RealTimeVoice rtv;
 
-    
+
 
     private AudioClip clip;
     private byte[] bytes;
-
+    
     private bool IsClick;
     
     void Start()
@@ -32,7 +33,6 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     void Update()
     {
         this.transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
-
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -72,60 +72,17 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (IsClick)
         {
-            clip = Microphone.Start(null, false, 10, 44100);
+            rtv.StartASR();
         }
         else
         {
-            var position = Microphone.GetPosition(null);
-            Microphone.End(null);
-            var samples = new float[position * clip.channels];
-            clip.GetData(samples, 0);
-            bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);
-            SendRecording();
+            rtv.StopASR();
         }
     }
 
-    // Encode audio clip as wav file
-    private byte[] EncodeAsWAV(float[] samples, int frequency, int channels)
+    private IEnumerator ASR()
     {
-        using (var memoryStream = new MemoryStream(44 + samples.Length * 2))
-        {
-            using (var writer = new BinaryWriter(memoryStream))
-            {
-                writer.Write("RIFF".ToCharArray());
-                writer.Write(36 + samples.Length * 2);
-                writer.Write("WAVE".ToCharArray());
-                writer.Write("fmt ".ToCharArray());
-                writer.Write(16);
-                writer.Write((ushort)1);
-                writer.Write((ushort)channels);
-                writer.Write(frequency);
-                writer.Write(frequency * channels * 2);
-                writer.Write((ushort)(channels * 2));
-                writer.Write((ushort)16);
-                writer.Write("data".ToCharArray());
-                writer.Write(samples.Length * 2);
-
-                foreach (var sample in samples)
-                {
-                    writer.Write((short)(sample * short.MaxValue));
-                }
-            }
-            return memoryStream.ToArray();
-        }
-    }
-
-
-    // Voice Recognition by Huggingface API
-    private void SendRecording()
-    {
-        
-        HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response => {
-            SpeechRecognitionText.color = Color.white;
-            SpeechRecognitionText.text = response;
-        }, error => {
-            SpeechRecognitionText.color = Color.red;
-            SpeechRecognitionText.text = error;
-        });
+        yield return 0;
+        rtv.StartASR();
     }
 }
