@@ -6166,6 +6166,7 @@ GameObject:
   - component: {fileID: 1763190173}
   - component: {fileID: 1763190174}
   - component: {fileID: 1763190175}
+  - component: {fileID: 1763190176}
   m_Layer: 5
   m_Name: AddComment
   m_TagString: Untagged
@@ -6316,6 +6317,7 @@ MonoBehaviour:
   AfterclickedSprite: {fileID: 21300000, guid: 0e5f77c72e19ec4478fdc71b569554a5, type: 3}
   textPanel: {fileID: 704988268}
   rtv: {fileID: 1763190175}
+  agent: {fileID: 1763190176}
 --- !u!114 &1763190175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6330,6 +6332,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeechRecognitionText: {fileID: 882066501}
   RecordedClip: {fileID: 0}
+--- !u!114 &1763190176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763190168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54cc3e0134cbaaa4097fe5a020c9e331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useProxy: 0
+  _proxyUri: 
+  _apiKey: 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
+  _model: 0
+  _maxTokens: 500
+  _temperature: 0.5
+  _chatbotName: ChatGPT
+  _initialPrompt: Hello.
+  chatGPTResponse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1824430647
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
 using HuggingFace.API;
+using GPTIntergration;
 public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     // Start is called before the first frame update
@@ -16,7 +17,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Sprite AfterclickedSprite;
     public GameObject textPanel;
     public RealTimeVoice rtv;
-
+    public ChatGPTConversation agent;
 
 
     private AudioClip clip;
@@ -27,6 +28,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     void Start()
     {
         IsClick = false;
+        agent.SendToChatGPT("Hello");
     }
 
     // Update is called once per frame
@@ -73,6 +75,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (IsClick)
         {
             rtv.StartASR();
+            
         }
         else
         {
