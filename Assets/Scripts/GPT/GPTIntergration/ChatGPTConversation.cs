@@ -58,17 +58,17 @@ namespace GPTIntergration
             {
                 case Model.ChatGPT:
                     _chat = new Chat(_initialPrompt);
-                    _uri = "https://api.openai.com/v1/chat/completions";
-                    _selectedModel = "gpt-3.5-turbo";
+                    _uri = "https://gpt-api.hkust-gz.edu.cn/v1/chat/completions";
+                    _selectedModel = "gpt-4";
                     break;
                 case Model.Davinci:
                     _prompt = new Prompt(_chatbotName, _initialPrompt);
-                    _uri = "https://api.openai.com/v1/completions";
+                    _uri = "https://gpt-api.hkust-gz.edu.cn/v1/chat/completions";
                     _selectedModel = "text-davinci-003";
                     break;
                 case Model.Curie:
                     _prompt = new Prompt(_chatbotName, _initialPrompt);
-                    _uri = "https://api.openai.com/v1/completions";
+                    _uri = "https://gpt-api.hkust-gz.edu.cn/v1/chat/completions";
                     _selectedModel = "text-curie-001";
                     break;
             }
@@ -115,7 +115,7 @@ namespace GPTIntergration
                     chatGPTReq.messages.Add(new Message("user", message));
 
                     string chatGPTJson = JsonUtility.ToJson(chatGPTReq);
-
+                   
                     StartCoroutine(requests.PostReq<ChatGPTRes>(_uri, chatGPTJson, ResolveChatGPT, _reqHeaders));
                 }
 
@@ -140,9 +140,9 @@ namespace GPTIntergration
         {
             _lastChatGPTMsg = res.choices[0].message.content;
             _chat.AppendMessage(Chat.Speaker.User, _lastUserMsg);
-            Debug.Log("[USER]: " + _lastUserMsg);
+            Debug.Log("[ChatGPT USER]: " + _lastUserMsg);
             _chat.AppendMessage(Chat.Speaker.ChatGPT, _lastChatGPTMsg);
-            Debug.Log("[GPT]: " + _lastChatGPTMsg);
+            Debug.Log("[ChatGPT GPT]: " + _lastChatGPTMsg);
             chatGPTResponse.Invoke(_lastChatGPTMsg);
         }
 
