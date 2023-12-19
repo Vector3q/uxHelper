@@ -9,9 +9,12 @@ using System.Text;
 using System.Threading;
 using UnityEngine.UI;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
+using Reqs;
 
 public class RealTimeVoice : MonoBehaviour
 {
+    private Requests requests = new Requests();
     private string appid = "f111cd01";
     private string appkey = "c5cd4195b06ee65921c844db76f615c2";
 
@@ -45,7 +48,8 @@ public class RealTimeVoice : MonoBehaviour
     
     public void StartASR()
     {
-        if(ws != null && ws.State == WebSocketState.Open)
+        Debug.Log("[ASR] Start 1");
+        if (ws != null && ws.State == WebSocketState.Open)
         {
             Debug.LogWarning("[Voice] start ASR fails, please wait for the last connection to end!");
             return;
@@ -55,23 +59,30 @@ public class RealTimeVoice : MonoBehaviour
             Debug.LogError("[Voice] No accessible microphone!");
             return;
         }
-
+        Debug.Log("[ASR] Start 2");
         ConnectASR_Aysnc();
         
         RecordedClip = Microphone.Start(null, false, MAX_RECORD_LENGTH, 16000);
     }
 
-    public void StopASR()
+    public async void StopASR()
     {
         if(ws != null)
         {
             // close the coroutine of audio sending.
             StopCoroutine(SendAudioClip());
-
-            ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")), WebSocketMessageType.Binary, true, new CancellationToken());
+            await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")),
+                WebSocketMessageType.Binary,
+                true, new CancellationToken());
+            
+            
+            
+            //ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")), WebSocketMessageType.Binary, true, new CancellationToken());
             Microphone.End(null);
 
+
             StartCoroutine(StopRecord());
+            ws.Dispose();
         }
     }
 
@@ -83,18 +94,23 @@ public class RealTimeVoice : MonoBehaviour
 
     async void ConnectASR_Aysnc()
     {
+        Debug.Log("[ASR] Start 3");
         ws = new ClientWebSocket();
         ct = new CancellationToken();
 
         Uri url = GetUri();
+        Debug.Log("[ASR] Start 4");
         await ws.ConnectAsync(url, ct);
-
+        Debug.Log("[ASR] Start 5");
         StartCoroutine(SendAudioClip());
+        Debug.Log("[ASR] Start 6");
         StringBuilder sb = new StringBuilder();
         while(ws.State == WebSocketState.Open)
         {
-            var result = new byte[4096];
+            Debug.Log(ws.CloseStatus.ToString());
 
+            var result = new byte[4096];
+            Debug.Log("[ASR] WS.RECEIVEASYNC");
             await ws.ReceiveAsync(new ArraySegment<byte>(result), ct);
             List<byte> list = new List<byte>(result);
             while (list[list.Count - 1] == 0x00) list.RemoveAt(list.Count - 1);
@@ -106,7 +122,6 @@ public class RealTimeVoice : MonoBehaviour
             }
 
             JsonData jsonData = JsonUtility.FromJson<JsonData>(str);
-            Debug.Log("[Voice] Receive Json Message: " + jsonData.data.ToString());
 
             if (jsonData.action.Equals("started"))
             {
@@ -122,14 +137,7 @@ public class RealTimeVoice : MonoBehaviour
                 ws.Abort();
             }
         }
-
-        Debug.LogWarning("[Voice] Connection Stop");
-        string s = sb.ToString();
-        if (!string.IsNullOrEmpty(s))
-        {
-            asrCallback?.Invoke(s);
-            Debug.LogWarning("[Voice] Voice:" + s);
-        }
+        Debug.Log("[ASR] Start 6");
     }
 
     private Uri GetUri()

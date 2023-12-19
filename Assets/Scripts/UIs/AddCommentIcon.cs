@@ -82,6 +82,8 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         else
         {
             rtv.StopASR();
+            agent.SendToChatGPT(rtv.SpeechRecognitionText.text.ToString());
+
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Reqs;
+using Utils;
 
 namespace GPTIntergration
 {
@@ -140,8 +141,8 @@ namespace GPTIntergration
         {
             _lastChatGPTMsg = res.choices[0].message.content;
             _chat.AppendMessage(Chat.Speaker.User, _lastUserMsg);
-            Debug.Log("[ChatGPT USER]: " + _lastUserMsg);
             _chat.AppendMessage(Chat.Speaker.ChatGPT, _lastChatGPTMsg);
+            string[] line = Utils.Utils.TextClean(_lastChatGPTMsg);
             Debug.Log("[ChatGPT GPT]: " + _lastChatGPTMsg);
             chatGPTResponse.Invoke(_lastChatGPTMsg);
         }
