@@ -23,6 +23,16 @@ namespace Utils
             AllColors.Add(new Color(0.294f, 0.0f, 0.51f)); // Indigo
         }
 
+        static public Color FindColor(string tag)
+        {
+            int index = AllTags.IndexOf(tag);
+
+            if (index == -1)
+                return Color.white;
+
+            return AllColors[index];
+
+        }
         static public string[] TextClean(string messyText)
         {
             string[] lines = messyText.Split('\n');

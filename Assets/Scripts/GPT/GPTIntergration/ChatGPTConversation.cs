@@ -52,8 +52,10 @@ namespace GPTIntergration
 
 
         [Header("Interaction Part")]
+        public GameObject StatusPlanePrefab;
+        public Transform SliderArea;
         public FilterAreaController filterScript;
-
+        
 
         private void OnEnable()
         {
@@ -149,13 +151,14 @@ namespace GPTIntergration
             _lastChatGPTMsg = res.choices[0].message.content;
             _chat.AppendMessage(Chat.Speaker.User, _lastUserMsg);
             _chat.AppendMessage(Chat.Speaker.ChatGPT, _lastChatGPTMsg);
-            string[] line = Utils.Utils.TextClean(_lastChatGPTMsg);
+            string[] lines = Utils.Utils.TextClean(_lastChatGPTMsg);
             Debug.Log("[ChatGPT GPT]: " + _lastChatGPTMsg);
             chatGPTResponse.Invoke(_lastChatGPTMsg);
 
 
             //Debug.Log(Utils.Utils.AllTags.Count);
             filterScript.ResetFilterItems(Utils.Utils.AllTags.Count);
+            SliderArea.GetComponent<SliderAreaController>().CreateStatusInfo(lines);
         }
 
         private void ResolveGPT(GPTRes res)
