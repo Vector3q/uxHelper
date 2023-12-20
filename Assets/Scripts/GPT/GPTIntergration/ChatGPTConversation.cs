@@ -15,6 +15,8 @@ namespace GPTIntergration
         [SerializeField]
         private string _apiKey = "";
 
+        
+        
         public enum Model
         {
             ChatGPT,
@@ -47,6 +49,11 @@ namespace GPTIntergration
         private string _initialPrompt = "You are ChatGPT, a large language model trained by OpenAI.";
 
         public UnityStringEvent chatGPTResponse = new UnityStringEvent();
+
+
+        [Header("Interaction Part")]
+        public FilterAreaController filterScript;
+
 
         private void OnEnable()
         {
@@ -145,6 +152,10 @@ namespace GPTIntergration
             string[] line = Utils.Utils.TextClean(_lastChatGPTMsg);
             Debug.Log("[ChatGPT GPT]: " + _lastChatGPTMsg);
             chatGPTResponse.Invoke(_lastChatGPTMsg);
+
+
+            //Debug.Log(Utils.Utils.AllTags.Count);
+            filterScript.ResetFilterItems(Utils.Utils.AllTags.Count);
         }
 
         private void ResolveGPT(GPTRes res)
