@@ -30,7 +30,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         IsClick = false;
         Debug.Log("[ChatGPT Start]");
         //agent.SendToChatGPT("Hello");
-        agent.SendToChatGPT("总结下面的文本，“用户认为“场所”包含在“地图”中，会前往“导览”寻找，并产生多余的搜索点击”");
+        //agent.SendToChatGPT("总结下面的文本，“用户认为“场所”包含在“地图”中，会前往“导览”寻找，并产生多余的搜索点击”");
     }
 
     // Update is called once per frame

@@ -5,7 +5,8 @@ using UnityEngine;
 public class KeepAspectRatio : MonoBehaviour
 {
     public float aspectRatio = 16.0f / 9f;
-
+    public float width;
+    public float height;
     private RectTransform rectTransform;
     private Vector2 originalSize;
 
@@ -32,9 +33,12 @@ public class KeepAspectRatio : MonoBehaviour
 
             if (newHeight > parentHeight)
             {
-                newHeight = parentHeight;
+                newHeight = parentHeight * 0.8f;
                 newWidth = parentHeight * aspectRatio;
             }
+
+            width = newWidth;
+            height = newHeight;
 
             // 设置子物体的大小
             rectTransform.sizeDelta = new Vector2(newWidth, newHeight);
