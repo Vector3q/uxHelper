@@ -25,6 +25,7 @@ public class RealTimeVoice : MonoBehaviour
     private string signa;
     public Text SpeechRecognitionText;
     public AudioClip RecordedClip;
+    
     ClientWebSocket ws;
     CancellationToken ct;
 
@@ -39,6 +40,7 @@ public class RealTimeVoice : MonoBehaviour
     void Start()
     {
         asrCallback += Output;
+        
     }
 
     void Output(string str)
@@ -61,8 +63,8 @@ public class RealTimeVoice : MonoBehaviour
         }
         Debug.Log("[ASR] Start 2");
         ConnectASR_Aysnc();
-        
         RecordedClip = Microphone.Start(null, false, MAX_RECORD_LENGTH, 16000);
+
     }
 
     public async void StopASR()
@@ -74,9 +76,9 @@ public class RealTimeVoice : MonoBehaviour
             await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")),
                 WebSocketMessageType.Binary,
                 true, new CancellationToken());
-            
-            
-            
+
+
+
             //ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")), WebSocketMessageType.Binary, true, new CancellationToken());
             Microphone.End(null);
 
@@ -162,7 +164,7 @@ public class RealTimeVoice : MonoBehaviour
         const float waitTime = 0.04f;
         const int maxlength = 1280;
         int status = 0;
-        int lastPosition = 0;
+        int lastPosition = Microphone.GetPosition(null);
         while(position < RecordedClip.samples && ws.State == WebSocketState.Open)
         {
             accumulatedTime += waitTime;

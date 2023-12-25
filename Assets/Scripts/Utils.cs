@@ -23,6 +23,17 @@ namespace Utils
             AllColors.Add(new Color(0.294f, 0.0f, 0.51f)); // Indigo
         }
 
+        static public string getAllTags()
+        {
+            string alltags = "(";
+            for(int i=0; i<AllTags.Count; i++)
+            {
+                alltags += AllTags[i].ToString()+",";
+            }
+            alltags += ")";
+            return alltags;
+        }
+
         static public Color FindColor(string tag)
         {
             int index = AllTags.IndexOf(tag);
