@@ -30,7 +30,7 @@ public class RealTimeVoice : MonoBehaviour
     CancellationToken ct;
 
     private int MAX_RECORD_LENGTH = 3599;
-
+    string[] _devicename;
     /// <summary>
     /// 语音识别回调事件
     /// </summary>
@@ -39,7 +39,21 @@ public class RealTimeVoice : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         asrCallback += Output;
+        _devicename = Microphone.devices;
+        int _deviceLength = _devicename.Length;
+        if (_deviceLength == 0)
+        {
+            Debug.Log("cant find Microphone");
+        }
+        else
+        {
+            for (int i = 0; i < _deviceLength; i++)
+            {
+                Debug.Log($"find Microphone == {i}  " + _devicename[i]);
+            }
+        }
         
     }
 
@@ -63,7 +77,7 @@ public class RealTimeVoice : MonoBehaviour
         }
         Debug.Log("[ASR] Start 2");
         ConnectASR_Aysnc();
-        RecordedClip = Microphone.Start(null, false, MAX_RECORD_LENGTH, 16000);
+        
 
     }
 
@@ -96,6 +110,7 @@ public class RealTimeVoice : MonoBehaviour
 
     async void ConnectASR_Aysnc()
     {
+        RecordedClip = Microphone.Start(_devicename[0], false, MAX_RECORD_LENGTH, 16000);
         Debug.Log("[ASR] Start 3");
         ws = new ClientWebSocket();
         ct = new CancellationToken();
@@ -138,6 +153,8 @@ public class RealTimeVoice : MonoBehaviour
                 Debug.Log("[Voice] Error: " + jsonData.desc);
                 ws.Abort();
             }
+
+            await Task.Delay(100);
         }
         Debug.Log("[ASR] Start 6");
     }
