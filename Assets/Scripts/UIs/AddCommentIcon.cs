@@ -36,7 +36,8 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
+        transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
+        textPanel.transform.position = new Vector3(playSlider.handleRect.position.x, textPanel.transform.position.y, playSlider.handleRect.position.z);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -62,12 +63,14 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         IsClick = !IsClick;
         if (IsClick)
         {
+            textPanel.gameObject.SetActive(true);
             image.sprite = AfterclickedSprite;
             textPanel.SetActive(true);
         }
         else
         {
             image.sprite = BeforeclickedSprite;
+            textPanel.gameObject.SetActive(false);
         }
         Recording();
     }
