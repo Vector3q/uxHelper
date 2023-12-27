@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+public enum VideoState
+{
+    normal,
+    waitforinstruction,
+}
 
 public class VideoController : MonoBehaviour
 {
@@ -14,7 +19,10 @@ public class VideoController : MonoBehaviour
     public float speedChangeRate = 0.1f;
     // speed of playing video
     public float playbackSpeed;
+    private VideoState videoState;
     // each skip time
+    private float doubleClickTimeThreshold = 0.2f;
+    private float lastClickTime = 0f;
     private float skipTime = 10.0f;
     // total time of current video duration
     private float videoDuration;
@@ -30,7 +38,7 @@ public class VideoController : MonoBehaviour
     public Sprite playIcon;
     public Sprite stopIcon;
     public Image playButtonImage;
-
+    public GameObject AdjustPanel;
     // formatted time text
     public Text TimeText;
     public Slider volumeSlider;
@@ -38,6 +46,7 @@ public class VideoController : MonoBehaviour
     public Dropdown pbSpeedDropDown;
     public Slider playSlider;
     public Button scissorsButton;
+    public Button addComment;
     PlayerSlider playerSlider;
     #endregion
 
