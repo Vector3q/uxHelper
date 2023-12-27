@@ -22,7 +22,10 @@ namespace Utils
             AllColors.Add(new Color(0.863f, 0.078f, 0.235f)); // Crimson
             AllColors.Add(new Color(0.294f, 0.0f, 0.51f)); // Indigo
         }
-
+        static public void DebugTAG(string TAG, string Info)
+        {
+            Debug.Log($"[{TAG}] {Info}");
+        }
         static public string getAllTags()
         {
             string alltags = "(";

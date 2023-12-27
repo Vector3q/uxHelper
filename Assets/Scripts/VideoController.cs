@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.EventSystems;
+using Utils;
 public enum VideoState
 {
     normal,
     waitforinstruction,
 }
 
-public class VideoController : MonoBehaviour
+public enum ClickState
+{
+    none,
+    one,
+    two,
+}
+
+public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
 
     #region parameter
@@ -20,21 +29,27 @@ public class VideoController : MonoBehaviour
     // speed of playing video
     public float playbackSpeed;
     private VideoState videoState;
+    private ClickState clickState;
     // each skip time
-    private float doubleClickTimeThreshold = 0.2f;
+    private float doubleClickTimeThreshold = 0.4f;
     private float lastClickTime = 0f;
     private float skipTime = 10.0f;
     // total time of current video duration
     private float videoDuration;
     private float changedSecond;
     private float subTime;
-    
+    private float clickTime;
+    private float clickCount;
+    private float timerForHover;
+    private bool isClicking = false;
+
 
 
     #endregion
 
     #region UI Related
     // Button image
+    public GameObject playButton;
     public Sprite playIcon;
     public Sprite stopIcon;
     public Image playButtonImage;
@@ -58,26 +73,34 @@ public class VideoController : MonoBehaviour
     void Start()
     {
         changedSecond = 0f;
+        clickTime = 0f;
+        clickCount = 0;
         videoPlayer = GetComponent<VideoPlayer>();
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
-        playerSlider = playSlider.GetComponent<PlayerSlider>();
-        playSlider.onValueChanged.AddListener( value => { if (subTime > 0.005f)  videoPlayer.time = value * videoDuration;});
-        Setup();
         
+        playSlider.onValueChanged.AddListener(value => { if (subTime > 0.005f) videoPlayer.time = value * videoDuration; });
+        Setup();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        timerForHover += Time.deltaTime;
         updateTimeText();
+        UpdateTimeSet();
+        if (playSlider.gameObject.activeSelf == true)
+        {
+            playerSlider = playSlider.GetComponent<PlayerSlider>();
+            //videoPlayer.time = playerSlider.getSliderValue() * videoDuration;
+            subTime = Mathf.Abs(playerSlider.getSliderValue() - changedSecond);
 
-        //videoPlayer.time = playerSlider.getSliderValue() * videoDuration;
-        subTime = Mathf.Abs(playerSlider.getSliderValue() - changedSecond);
+            
+            if (subTime < 0.005f)
+                playerSlider.setSliderValue((float)videoPlayer.time / videoDuration);
+            changedSecond = playerSlider.getSliderValue();
+        }
 
-
-        if (subTime < 0.005f )
-            playerSlider.setSliderValue((float)videoPlayer.time / videoDuration);
-        changedSecond = playerSlider.getSliderValue();
     }
 
     // Set initial parameters
@@ -90,6 +113,24 @@ public class VideoController : MonoBehaviour
         //volumeSlider.value = videoPlayer.GetDirectAudioVolume(0);
         //Debug.Log("Volume: " + volumeSlider.value);
         volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        videoState = VideoState.normal;
+        clickState = ClickState.none;
+
+        
+    }
+
+    void UpdateTimeSet()
+    {
+        timego(ref clickTime);
+        timego(ref timerForHover);
+    }
+
+    void timego(ref float targetTimer)
+    {
+        if (targetTimer < 60f)
+        {
+            targetTimer += Time.deltaTime;
+        }
     }
 
     // As name
@@ -133,7 +174,7 @@ public class VideoController : MonoBehaviour
     public void VideoPlayStop()
     {
         Debug.Log("STATUS: " + GetVideoStatus());
-        if(GetVideoStatus() == true)
+        if (GetVideoStatus() == true)
         {
             videoPlayer.Pause();
             playButtonImage.sprite = playIcon;
@@ -166,7 +207,7 @@ public class VideoController : MonoBehaviour
     // Listen to change of dropdown and Change the speed of playback
     void SelectPlaybackSpeed(int index)
     {
-        if(pbSpeedDropDown.options[index].text == "normal")
+        if (pbSpeedDropDown.options[index].text == "normal")
         {
             videoPlayer.playbackSpeed = 1;
             return;
@@ -189,7 +230,83 @@ public class VideoController : MonoBehaviour
         videoPlayer.time = newTime;
     }
 
-    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        timerForHover = 0f;
+    }
 
-    
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(clickTime > doubleClickTimeThreshold)
+        {
+            clickCount = 0;
+            clickTime = 0f;
+        }
+        clickCount++;
+        if (clickCount >= 3) clickCount = 1;
+        
+        if (videoState == VideoState.normal)
+        {
+            videoState = VideoState.waitforinstruction;
+            StartWaitForInstruction();
+        }
+
+        if(videoState == VideoState.waitforinstruction)
+        {
+            if(clickCount == 2)
+            {
+                DoubleClickPlayorPause();
+            }
+        }
+    }
+
+    public void DoubleClickPlayorPause()
+    {
+        if (GetVideoStatus())
+        {
+            videoPlayer.Pause();
+            playButton.SetActive(true);
+            playButtonImage.sprite = playIcon;
+        }
+        else
+        {
+            videoPlayer.Play();
+            playButton.SetActive(false);
+        }
+    }
+
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(timerForHover < 1f)
+        {
+            return;
+        }
+        Debug.Log($"[Hover Exit] {timerForHover}");
+        timerForHover = 0f;
+        if (videoState == VideoState.waitforinstruction)
+            StartCoroutine(waitforinteraction());
+    }
+
+
+    IEnumerator waitforinteraction()
+    {
+        yield return new WaitForSeconds(3f);
+        videoState = VideoState.normal;
+        EndWaitForInstruction();
+    }
+    private void StartWaitForInstruction()
+    {
+        playSlider.gameObject.SetActive(true);
+        addComment.gameObject.SetActive(true);
+    }
+
+    private void EndWaitForInstruction()
+    {
+
+        playSlider.gameObject.SetActive(false);
+        addComment.gameObject.SetActive(false);
+    }
+
 }

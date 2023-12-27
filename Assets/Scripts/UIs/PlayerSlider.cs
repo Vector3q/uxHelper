@@ -18,6 +18,12 @@ public class PlayerSlider : MonoBehaviour
         uIResize = canvas.GetComponent<UIResize>();
     }
 
+    private void OnEnable()
+    {
+        playSlider = GetComponent<Slider>();
+        uIResize = canvas.GetComponent<UIResize>();
+    }
+
     // Update is called once per frame
     void Update()
     {
