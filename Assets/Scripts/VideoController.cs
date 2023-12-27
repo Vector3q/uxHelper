@@ -18,7 +18,7 @@ public enum ClickState
     two,
 }
 
-public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler
 {
 
     #region parameter
@@ -53,7 +53,6 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public Sprite playIcon;
     public Sprite stopIcon;
     public Image playButtonImage;
-    public GameObject AdjustPanel;
     // formatted time text
     public Text TimeText;
     public Slider volumeSlider;
@@ -286,11 +285,11 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         Debug.Log($"[Hover Exit] {timerForHover}");
         timerForHover = 0f;
         if (videoState == VideoState.waitforinstruction)
-            StartCoroutine(waitforinteraction());
+            StartCoroutine(Waitforinteraction());
     }
 
 
-    IEnumerator waitforinteraction()
+    IEnumerator Waitforinteraction()
     {
         yield return new WaitForSeconds(3f);
         videoState = VideoState.normal;
@@ -309,4 +308,9 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         addComment.gameObject.SetActive(false);
     }
 
+    public void OnDrag(PointerEventData eventData)
+    {
+        if(videoState ==VideoState.waitforinstruction)
+            Debug.Log(eventData);
+    }
 }
