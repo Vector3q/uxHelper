@@ -8,8 +8,10 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
     
     private Image buttonImage;
     public bool HoverToChangeAlpha;
+    public bool HoverToChangeTextAlpha;
     public bool HoverToChangeAllChildrenAlpha;
     public bool HoverToDisplayCircleBG;
+    
     public bool PointerUpToDisplay;
     public bool ClickToChangeIcon;
     public Sprite UnClickedIcon;
@@ -19,10 +21,17 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private Transform circleBG;
     private bool IsClick;
+    private Transform textTransform;
+    private Text text;
     // Start is called before the first frame update
     void Start()
     {
         IsClick = false;
+        if (HoverToChangeTextAlpha)
+        {
+            textTransform = transform.Find("Text");
+            text = textTransform.GetComponent<Text>();
+        }
         buttonImage = GetComponent<CustomImage>();
 
         if(buttonImage == null)
@@ -42,7 +51,8 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
             buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1);
         if (HoverToDisplayCircleBG)
             circleBG.gameObject.SetActive(true);
-
+        if (HoverToChangeTextAlpha)
+            text.color = new Vector4(text.color.r, text.color.g, text.color.b, 1);
 
     }
 
@@ -53,6 +63,8 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
             buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.25f);
         if (HoverToDisplayCircleBG)
             circleBG.gameObject.SetActive(false);
+        if (HoverToChangeTextAlpha)
+            text.color = new Vector4(text.color.r, text.color.g, text.color.b, 0.25f);
     }
     // Update is called once per frame
     void Update()

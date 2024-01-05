@@ -89,7 +89,10 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             //agent.SendToChatGPT(rtv.SpeechRecognitionText.text.ToString());
         }
     }
-
+    public bool GetPlayStatus()
+    {
+        return IsClick;
+    }
     private IEnumerator ASR()
     {
         yield return 0;

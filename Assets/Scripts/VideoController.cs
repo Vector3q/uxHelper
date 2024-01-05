@@ -9,6 +9,7 @@ public enum VideoState
 {
     normal,
     waitforinstruction,
+    speaking,
 }
 
 public enum ClickState
@@ -50,6 +51,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     #region UI Related
     // Button image
     public GameObject playButton;
+    public GameObject textPanel;
     public Sprite playIcon;
     public Sprite stopIcon;
     public Image playButtonImage;
@@ -61,6 +63,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public Slider playSlider;
     public Button scissorsButton;
     public Button addComment;
+
     PlayerSlider playerSlider;
     #endregion
 
@@ -76,7 +79,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         clickCount = 0;
         videoPlayer = GetComponent<VideoPlayer>();
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
-        
+        addComment.onClick.AddListener(ClickToSpeak);
         playSlider.onValueChanged.AddListener(value => { if (subTime > 0.005f) videoPlayer.time = value * videoDuration; });
         Setup();
 
@@ -86,6 +89,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     void Update()
     {
         timerForHover += Time.deltaTime;
+        
         updateTimeText();
         UpdateTimeSet();
         if (playSlider.gameObject.activeSelf == true)
@@ -159,6 +163,17 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         videoPlayer.SetDirectAudioVolume(0, mappedVolume);
     }
 
+    void ClickToSpeak()
+    {
+        if (addComment.GetComponent<AddCommentIcon>().GetPlayStatus())
+        {
+            videoState = VideoState.speaking;
+        }
+        else
+        {
+            videoState = VideoState.waitforinstruction;
+        }
+    }
     string FormatTime(float length)
     {
         string formattedTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
@@ -237,6 +252,13 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (addComment.GetComponent<AddCommentIcon>().GetPlayStatus())
+        {
+            return;
+        }
+
+
+
         if(clickTime > doubleClickTimeThreshold)
         {
             clickCount = 0;
@@ -245,6 +267,9 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         clickCount++;
         if (clickCount >= 3) clickCount = 1;
         
+
+
+
         if (videoState == VideoState.normal)
         {
             videoState = VideoState.waitforinstruction;
@@ -258,6 +283,9 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                 DoubleClickPlayorPause();
             }
         }
+
+
+
     }
 
     public void DoubleClickPlayorPause()
@@ -278,11 +306,13 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
+
+
         if(timerForHover < 1f)
         {
             return;
         }
-        Debug.Log($"[Hover Exit] {timerForHover}");
+        //Debug.Log($"[Hover Exit] {timerForHover}");
         timerForHover = 0f;
         if (videoState == VideoState.waitforinstruction)
             StartCoroutine(Waitforinteraction());
@@ -297,15 +327,17 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     }
     private void StartWaitForInstruction()
     {
-        playSlider.gameObject.SetActive(true);
+
         addComment.gameObject.SetActive(true);
+
     }
 
     private void EndWaitForInstruction()
     {
 
-        playSlider.gameObject.SetActive(false);
         addComment.gameObject.SetActive(false);
+        textPanel.SetActive(false);
+
     }
 
     public void OnDrag(PointerEventData eventData)
