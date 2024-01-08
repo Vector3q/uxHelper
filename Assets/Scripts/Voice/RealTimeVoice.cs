@@ -31,6 +31,8 @@ public class RealTimeVoice : MonoBehaviour
 
     private int MAX_RECORD_LENGTH = 3599;
     string[] _devicename;
+    [HideInInspector]
+    public AudioClip clipnow;
     /// <summary>
     /// 语音识别回调事件
     /// </summary>
@@ -91,7 +93,7 @@ public class RealTimeVoice : MonoBehaviour
                 WebSocketMessageType.Binary,
                 true, new CancellationToken());
 
-
+            clipnow = RecordedClip;
 
             //ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")), WebSocketMessageType.Binary, true, new CancellationToken());
             Microphone.End(null);

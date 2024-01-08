@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SliderAreaController : MonoBehaviour
 {
     public GameObject statusPrefab;
+    public GameObject markCardPrefab;
     public Slider playSlider;
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,22 @@ public class SliderAreaController : MonoBehaviour
             newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y-20f*0.002f, Rect.position.z);
 
             newObject.GetComponent<StatusPlanePrefab>().setStatusBar(lines);
+        }
+    }
+
+    public void CreateMarkCard(string[] lines, string speech, AudioClip clip)
+    {
+        if(markCardPrefab != null)
+        {
+            RectTransform Rect = transform.GetComponent<RectTransform>();
+
+            GameObject newObject = Instantiate(markCardPrefab);
+
+            newObject.transform.SetParent(transform, false);
+
+            newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y - 20f * 0.002f, Rect.position.z);
+
+            newObject.GetComponent<MarkCard>().createSelf(lines, speech, clip);
         }
     }
 }

@@ -55,7 +55,8 @@ namespace GPTIntergration
         public GameObject StatusPlanePrefab;
         public Transform SliderArea;
         public FilterAreaController filterScript;
-        
+        private string messagenow;
+        private AudioClip clipnow;
 
         private void OnEnable()
         {
@@ -97,9 +98,11 @@ namespace GPTIntergration
             }
         }
 
-        public void SendToChatGPT(string message)
+        public void SendToChatGPT(string message, AudioClip clip)
         {
             _lastUserMsg = message;
+            messagenow = message;
+            clipnow = clip;
 
             if (_model == Model.ChatGPT)
             {
@@ -158,7 +161,7 @@ namespace GPTIntergration
 
             //Debug.Log(Utils.Utils.AllTags.Count);
             filterScript.ResetFilterItems(Utils.Utils.AllTags.Count);
-            SliderArea.GetComponent<SliderAreaController>().CreateStatusInfo(lines);
+            SliderArea.GetComponent<SliderAreaController>().CreateMarkCard(lines, messagenow, clipnow);
         }
 
         private void ResolveGPT(GPTRes res)
