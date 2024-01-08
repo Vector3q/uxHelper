@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-    public class MarkCard : MonoBehaviour
-    {
+public class MarkCard : MonoBehaviour
+{
         
         public Text speechText;
         public Button playButton;
@@ -46,6 +46,7 @@ using System.Collections.Generic;
                 Color colori = Utils.Utils.FindColor(tags[i]);
                 cards[i].GetComponent<Image>().color = colori;
                 cards[i].Find("Text").GetComponent<Text>().text = tags[i];
+                cards[i].gameObject.SetActive(true);
             }
 
             if (clip != null)
@@ -84,4 +85,4 @@ using System.Collections.Generic;
                 Debug.Log($"[MarkCard] No tag {tag}");
             }
         }
-    }
+}

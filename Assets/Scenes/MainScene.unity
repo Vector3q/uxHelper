@@ -4458,7 +4458,7 @@ RectTransform:
   - {fileID: 1763190169}
   - {fileID: 431193788}
   m_Father: {fileID: 1943700087}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -40260,7 +40260,7 @@ RectTransform:
   - {fileID: 654485717}
   - {fileID: 2133404356}
   m_Father: {fileID: 1943700087}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -49428,8 +49428,8 @@ RectTransform:
   m_Children:
   - {fileID: 1371643433}
   - {fileID: 1415499916}
-  - {fileID: 252575128}
   - {fileID: 1612908714}
+  - {fileID: 252575128}
   - {fileID: 984859399}
   - {fileID: 809935406}
   - {fileID: 288856099}
@@ -54747,7 +54747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7122031499020271950, guid: f75b726d2faeca242851e10e50f8d7c6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 438.6
+      value: 445.7
       objectReference: {fileID: 0}
     - target: {fileID: 7122031499020271950, guid: f75b726d2faeca242851e10e50f8d7c6, type: 3}
       propertyPath: m_AnchoredPosition.y

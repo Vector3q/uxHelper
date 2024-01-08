@@ -98,10 +98,10 @@ namespace GPTIntergration
             }
         }
 
-        public void SendToChatGPT(string message, AudioClip clip)
+        public void SendToChatGPT(string message, string messageClean, AudioClip clip)
         {
             _lastUserMsg = message;
-            messagenow = message;
+            messagenow = messageClean;
             clipnow = clip;
 
             if (_model == Model.ChatGPT)
