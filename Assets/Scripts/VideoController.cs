@@ -10,6 +10,7 @@ public enum VideoState
     normal,
     waitforinstruction,
     speaking,
+    unactive,
 }
 
 public enum ClickState
@@ -19,7 +20,7 @@ public enum ClickState
     two,
 }
 
-public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler
+public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     #region parameter
@@ -43,6 +44,10 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private float clickCount;
     private float timerForHover;
     private bool isClicking = false;
+
+    private Vector2 dragBeginPos;
+    private Vector2 dragEndPos;
+    private const float DRAGTHRESHOLD = 500f;
 
 
 
@@ -165,13 +170,13 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     void ClickToSpeak()
     {
-        if (addComment.GetComponent<AddCommentIcon>().GetPlayStatus())
+        if (addComment.GetComponent<AddCommentIcon>().IsClick)
         {
-            videoState = VideoState.speaking;
+            //videoState = VideoState.speaking;
         }
         else
         {
-            videoState = VideoState.waitforinstruction;
+            //videoState = VideoState.waitforinstruction;
         }
     }
     string FormatTime(float length)
@@ -342,7 +347,32 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(videoState ==VideoState.waitforinstruction)
-            Debug.Log(eventData);
+            
     }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(videoState == VideoState.waitforinstruction)
+        {
+            dragBeginPos = eventData.position;
+            Debug.Log($"[Drag] drag begin position {dragBeginPos}");
+        }
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (videoState == VideoState.waitforinstruction)
+        {
+            dragEndPos = eventData.position;
+            Debug.Log($"[Drag] drag end position {dragEndPos}");
+            if(dragEndPos.x - dragBeginPos.x >= DRAGTHRESHOLD)
+            {
+                SkipForward();
+            }
+            else if(dragEndPos.x - dragBeginPos.x <= -DRAGTHRESHOLD)
+            {
+                SkipBack();
+            }
+        }
+    }
+
 }

@@ -11,11 +11,12 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
     public bool HoverToChangeTextAlpha;
     public bool HoverToChangeAllChildrenAlpha;
     public bool HoverToDisplayCircleBG;
-    
+    public bool NoNeedToKeepClickStatus;
     public bool PointerUpToDisplay;
     public bool ClickToChangeIcon;
     public Sprite UnClickedIcon;
     public Sprite ClikedIcon;
+    
 
 
 
@@ -74,8 +75,10 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        
-        IsClick = !IsClick;
+        if (!NoNeedToKeepClickStatus)
+        {
+            IsClick = !IsClick;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)

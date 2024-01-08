@@ -22,8 +22,8 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private AudioClip clip;
     private byte[] bytes;
-    
-    private bool IsClick;
+    [HideInInspector]
+    public bool IsClick;
     
     void Start()
     {

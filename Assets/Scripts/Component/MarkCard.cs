@@ -11,9 +11,11 @@ public class MarkCard : MonoBehaviour
         public Button MarkIconButton;
         public GameObject MarkCardObject;
         public Transform StatusPlane;
+        public AudioSource audioSource;
         private AudioClip speechClip;
         private string currentTime;
         private string endTime;
+        private float sliderRatio;
 
         [HideInInspector]
         public List<string> tags;
@@ -24,6 +26,7 @@ public class MarkCard : MonoBehaviour
         void Start()
         {
             MarkIconButton.onClick.AddListener( () => { MarkCardObject.SetActive(!GetMarkCardActive()); });
+            playButton.onClick.AddListener(() => {audioSource.Play(); });
         }
 
         /// <summary>
@@ -49,8 +52,12 @@ public class MarkCard : MonoBehaviour
                 cards[i].gameObject.SetActive(true);
             }
 
-            if (clip != null)
+            if (clip != null) 
+            {
                 speechClip = clip;
+                audioSource.clip = clip;
+            }
+                
             else
                 Debug.Log("[MarkCard Create] AudioClip does not exist");
 
