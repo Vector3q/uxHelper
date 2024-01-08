@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7336725463861783136}
   - component: {fileID: 8561138235954290473}
   - component: {fileID: 1099457041939438656}
+  - component: {fileID: 9181767242059981424}
   m_Layer: 5
   m_Name: FilterItem
   m_TagString: Untagged
@@ -216,9 +217,24 @@ MonoBehaviour:
   HoverToDisplayCircleBG: 0
   NoNeedToKeepClickStatus: 1
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
+--- !u!114 &9181767242059981424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543098635485458563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3775bf9c84b3d3f4c80c247653b92b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rcmdNetwork: {fileID: 0}
+  filterButton: {fileID: 8561138235954290473}
 --- !u!1 &2543098636809277279
 GameObject:
   m_ObjectHideFlags: 0

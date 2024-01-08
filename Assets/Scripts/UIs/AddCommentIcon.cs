@@ -84,14 +84,16 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         else
         {
+            
             rtv.StopASR();
             string temp = "“用户认为“场所”包含在“地图”中，会前往“导览”寻找，并产生多余的搜索点击”." ;
-            string tempPlusPrompt = "总结下面的文本" + temp + "请尽量使用以下词汇:" + Utils.Utils.getAllTags();
+            string tempPlusPrompt = "请在high-level的角度上总结下面的文本" + temp + "请尽量使用以下词汇:" + Utils.Utils.getAllTags();
             //agent.SendToChatGPT("总结下面的文本，“用户认为“场所”包含在“地图”中，会前往“导览”寻找，并产生多余的搜索点击”."+"请尽量使用以下词汇:"+);
             Debug.Log($"[speech recognition text] {rtv.SpeechRecognitionText.text}");
 
             agent.SendToChatGPT(tempPlusPrompt, temp, rtv.clipnow);
             //agent.SendToChatGPT("总结下面的文本，" + rtv.SpeechRecognitionText.text.ToString(), rtv.clipnow);
+
         }
     }
     public bool GetPlayStatus()

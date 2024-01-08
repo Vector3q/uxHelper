@@ -149,6 +149,8 @@ namespace GPTIntergration
             }
         }
 
+
+
         private void ResolveChatGPT(ChatGPTRes res)
         {
             _lastChatGPTMsg = res.choices[0].message.content;

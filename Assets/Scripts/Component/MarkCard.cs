@@ -6,28 +6,30 @@ using System.Collections.Generic;
 public class MarkCard : MonoBehaviour
 {
         
-        public Text speechText;
-        public Button playButton;
-        public Button MarkIconButton;
-        public GameObject MarkCardObject;
-        public Transform StatusPlane;
-        public AudioSource audioSource;
-        private AudioClip speechClip;
-        private string currentTime;
-        private string endTime;
-        private float sliderRatio;
+    public Text speechText;
+    public Button playButton;
+    public Button MarkIconButton;
+    public GameObject MarkCardObject;
+    public Transform StatusPlane;
+    public AudioSource audioSource;
+    public RcmdNetwork rcmdNetwork;
+    private AudioClip speechClip;
+    private string currentTime;
+    private string endTime;
+    private float sliderRatio;
 
         [HideInInspector]
-        public List<string> tags;
-        
-        private List<Color> colors;
-        public Transform[] cards;
-        // Use this for initialization
-        void Start()
-        {
-            MarkIconButton.onClick.AddListener( () => { MarkCardObject.SetActive(!GetMarkCardActive()); });
-            playButton.onClick.AddListener(() => {audioSource.Play(); });
-        }
+    public List<string> tags;
+    
+    private List<Color> colors;
+    public Transform[] cards;
+    // Use this for initialization
+    void Start()
+    {
+        MarkIconButton.onClick.AddListener( () => { MarkCardObject.SetActive(!GetMarkCardActive()); });
+        playButton.onClick.AddListener( () => {audioSource.Play(); });
+        rcmdNetwork = transform.parent.GetComponent<SliderAreaController>().rcmdNetwork;
+    }
 
         /// <summary>
         /// Create a new Mark
@@ -72,7 +74,7 @@ public class MarkCard : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-
+            
         }
 
         public bool GetMarkCardActive()

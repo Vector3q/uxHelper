@@ -13,6 +13,7 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
     public bool HoverToDisplayCircleBG;
     public bool NoNeedToKeepClickStatus;
     public bool PointerUpToDisplay;
+    public bool ClickToChangeAlpha;
     public bool ClickToChangeIcon;
     public Sprite UnClickedIcon;
     public Sprite ClikedIcon;
@@ -22,12 +23,14 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private Transform circleBG;
     private bool IsClick;
+    private bool IsVerseClick;
     private Transform textTransform;
     private Text text;
     // Start is called before the first frame update
     void Start()
     {
         IsClick = false;
+        IsVerseClick = true;
         if (HoverToChangeTextAlpha)
         {
             textTransform = transform.Find("Text");
@@ -62,6 +65,11 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (HoverToChangeAlpha && IsClick == false)
             buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.25f);
+        if (ClickToChangeAlpha && IsVerseClick == true)
+            buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.25f);
+        if (ClickToChangeAlpha && IsVerseClick == false)
+            buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0f);
+
         if (HoverToDisplayCircleBG)
             circleBG.gameObject.SetActive(false);
         if (HoverToChangeTextAlpha)
@@ -79,10 +87,25 @@ public class UIEffectController : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             IsClick = !IsClick;
         }
+        
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         this.gameObject.SetActive(true);
+        if (ClickToChangeAlpha)
+        {
+            Debug.Log($"UIEffect IsverseClick {IsVerseClick}");
+            if (IsVerseClick)
+            {
+                buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0f);
+            }
+            else
+            {
+                buttonImage.color = new Vector4(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.25f);
+            }
+            IsVerseClick = !IsVerseClick;
+        }
     }
 }

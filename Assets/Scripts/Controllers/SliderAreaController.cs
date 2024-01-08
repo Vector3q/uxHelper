@@ -8,6 +8,7 @@ public class SliderAreaController : MonoBehaviour
     public GameObject statusPrefab;
     public GameObject markCardPrefab;
     public Slider playSlider;
+    public RcmdNetwork rcmdNetwork;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +31,7 @@ public class SliderAreaController : MonoBehaviour
 
             newObject.transform.SetParent(transform, false);
 
-            newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y-20f*0.002f, Rect.position.z);
+            newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y - 20f*0.002f, Rect.position.z);
 
             newObject.GetComponent<StatusPlanePrefab>().setStatusBar(lines);
         }

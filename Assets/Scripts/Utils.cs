@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Utils
+namespace Utils 
 {
     public class Utils
     {
