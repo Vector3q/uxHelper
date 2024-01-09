@@ -11,6 +11,10 @@ public class StatusPlanePrefab : MonoBehaviour
     void Start()
     {
         rcmdNetwork = transform.parent.GetComponent<MarkCard>().rcmdNetwork;
+        if(rcmdNetwork != null)
+        {
+            Debug.Log("[StatusPlanePrefab] rcmdNetwork exist");
+        }
     }
 
     // Update is called once per frame
@@ -21,6 +25,7 @@ public class StatusPlanePrefab : MonoBehaviour
 
     public void setStatusBar(string[] lines)
     {
+        
         int count = lines.Length;
 
         for(int i=0; i<count; i++)
@@ -38,15 +43,26 @@ public class StatusPlanePrefab : MonoBehaviour
             
         }
 
-        for(int i=0; i<count; i++)
+
+        if (rcmdNetwork != null)
+        {
+            Debug.Log("[StatusPlanePrefab] setStatusBar rcmdNetwork exist");
+        }
+        for (int i=0; i<count; i++)
         {
             string tagi = lines[i];
             Debug.Log($"[MarkNode] {tagi} {statusInfo[i].name}");
             if (statusInfo[i].gameObject != null)
             {
-                rcmdNetwork.AddMarkNode(tagi, statusInfo[i]);
+                if (rcmdNetwork != null)
+                {
+                    rcmdNetwork.test(statusInfo[i].gameObject);
+                    rcmdNetwork.AddMarkNode(tagi, statusInfo[i].gameObject);
+                }
             }
         }
         rcmdNetwork.PrintMarkNetwork();
     }
+
+    
 }

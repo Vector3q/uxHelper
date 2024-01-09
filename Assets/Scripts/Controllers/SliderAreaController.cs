@@ -39,12 +39,13 @@ public class SliderAreaController : MonoBehaviour
 
     public void CreateMarkCard(string[] lines, string speech, AudioClip clip)
     {
+
         if(markCardPrefab != null)
         {
             RectTransform Rect = transform.GetComponent<RectTransform>();
 
             GameObject newObject = Instantiate(markCardPrefab);
-
+            
             newObject.transform.SetParent(transform, false);
 
             newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y + 110f * 0.002f, Rect.position.z);

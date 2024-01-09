@@ -10,6 +10,7 @@ public class MarkNode
     public MarkNode(string tag, GameObject Gobject)
     {
         this.tag = tag;
+        attachedObject = new List<GameObject>();
         attachedObject.Add(Gobject);
     }
 }
@@ -19,7 +20,7 @@ public class RcmdNetwork : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        MarkNetwork = new List<MarkNode>();
     }
 
     // Update is called once per frame
@@ -28,10 +29,10 @@ public class RcmdNetwork : MonoBehaviour
         
     }
 
-    public void AddMarkNode(string tag, Transform transform)
+    public void AddMarkNode(string tag, GameObject gameObject)
     {
         bool found = false;
-        GameObject gameObject = transform.gameObject;
+        //GameObject gameObject = transform.gameObject;
         foreach(MarkNode node in MarkNetwork)
         {
             if(node.tag == tag)
@@ -49,7 +50,10 @@ public class RcmdNetwork : MonoBehaviour
     public void FindMarkNode(Transform[] transforms)
     {
     }
+    public void test(GameObject gameObject)
+    {
 
+    }
     public void ControlMarkNetwork(string text, bool status)
     {
         Debug.Log($"[RcmdNetwork] {text}  --  {status}" );

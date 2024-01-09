@@ -29,6 +29,12 @@ public class MarkCard : MonoBehaviour
         MarkIconButton.onClick.AddListener( () => { MarkCardObject.SetActive(!GetMarkCardActive()); });
         playButton.onClick.AddListener( () => {audioSource.Play(); });
         rcmdNetwork = transform.parent.GetComponent<SliderAreaController>().rcmdNetwork;
+
+        if(rcmdNetwork != null)
+        {
+            Debug.Log("[MarkCard] rcmdNetwork exist");
+        }
+        StatusPlane.GetComponent<StatusPlanePrefab>().rcmdNetwork = rcmdNetwork;
     }
 
         /// <summary>
@@ -68,8 +74,14 @@ public class MarkCard : MonoBehaviour
             else
                 Debug.Log("[MarkCard Create] speech text does not exist");
 
-            StatusPlane.GetComponent<StatusPlanePrefab>().setStatusBar(tags);
+        StartCoroutine(setStatusBar(tags));
         }
+
+    IEnumerator setStatusBar(string[] tags)
+    {
+        yield return new WaitForSeconds(0.1f);
+        StatusPlane.GetComponent<StatusPlanePrefab>().setStatusBar(tags);
+    }
 
         // Update is called once per frame
         void Update()
