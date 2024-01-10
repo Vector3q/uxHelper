@@ -27,7 +27,7 @@ namespace Reqs
             webRequest.disposeDownloadHandlerOnDispose = true;
 
             yield return webRequest.SendWebRequest();
-
+            
 #if UNITY_2020_3_OR_NEWER
             switch (webRequest.result)
             {
@@ -64,14 +64,15 @@ namespace Reqs
             
             UnityWebRequest webRequest = new UnityWebRequest(uri, "POST");
             if (headers != null) SetHeaders(ref webRequest, headers);
-
+            
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
             webRequest.disposeDownloadHandlerOnDispose = true;
             webRequest.disposeUploadHandlerOnDispose = true;
-
+            Debug.Log($"[ChatGPT] webRequest");
             yield return webRequest.SendWebRequest();
+            Debug.Log("[ChatGPT] PostRequest");
 
 #if UNITY_2020_3_OR_NEWER
             switch (webRequest.result)

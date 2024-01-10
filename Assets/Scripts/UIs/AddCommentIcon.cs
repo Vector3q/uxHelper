@@ -28,7 +28,6 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     void Start()
     {
         IsClick = false;
-        Debug.Log("[ChatGPT Start]");
         //agent.SendToChatGPT("Hello");
         //agent.SendToChatGPT("总结下面的文本，“用户认为“场所”包含在“地图”中，会前往“导览”寻找，并产生多余的搜索点击”");
     }
@@ -44,8 +43,6 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         text.color = new Vector4(text.color.r, text.color.g, text.color.b, 1);
         image.color = new Vector4(image.color.r, image.color.g, image.color.b, 1);
-
-
     }
 
     // 当鼠标离开对象时调用
@@ -57,6 +54,7 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             image.color = new Vector4(image.color.r, image.color.g, image.color.b, 0.25f);
         }
     }
+
     public void OnPointerDown(PointerEventData eventData)
     {
 

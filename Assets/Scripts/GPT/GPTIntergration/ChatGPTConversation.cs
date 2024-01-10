@@ -103,7 +103,7 @@ namespace GPTIntergration
             _lastUserMsg = message;
             messagenow = messageClean;
             clipnow = clip;
-
+            Debug.Log("[ChatGPT] SendToChatGPT");
             if (_model == Model.ChatGPT)
             {
                 if (_useProxy)
@@ -117,6 +117,7 @@ namespace GPTIntergration
                     string proxyJson = JsonUtility.ToJson(proxyReq);
 
                     StartCoroutine(requests.PostReq<ChatGPTRes>(_proxyUri, proxyJson, ResolveChatGPT, _reqHeaders));
+                    Debug.Log("[ChatGPT] SendToChatGPT with proxy");
                 }
                 else
                 {
@@ -128,8 +129,9 @@ namespace GPTIntergration
                     chatGPTReq.messages.Add(new Message("user", message));
 
                     string chatGPTJson = JsonUtility.ToJson(chatGPTReq);
-                   
+                    Debug.Log("[ChatGPT] SendToChatGPT without proxy");
                     StartCoroutine(requests.PostReq<ChatGPTRes>(_uri, chatGPTJson, ResolveChatGPT, _reqHeaders));
+                    
                 }
 
             }
@@ -157,7 +159,7 @@ namespace GPTIntergration
             _chat.AppendMessage(Chat.Speaker.User, _lastUserMsg);
             _chat.AppendMessage(Chat.Speaker.ChatGPT, _lastChatGPTMsg);
             string[] lines = Utils.Utils.TextClean(_lastChatGPTMsg);
-            Debug.Log("[ChatGPT GPT]: " + _lastChatGPTMsg);
+            Debug.Log("[ChatGPT] GPT: " + _lastChatGPTMsg);
             chatGPTResponse.Invoke(_lastChatGPTMsg);
 
 
