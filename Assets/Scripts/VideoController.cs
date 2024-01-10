@@ -340,7 +340,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private void EndWaitForInstruction()
     {
 
-        addComment.gameObject.SetActive(false);
+        //addComment.gameObject.SetActive(false);
         textPanel.SetActive(false);
 
     }
@@ -366,11 +366,11 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             Debug.Log($"[Drag] drag end position {dragEndPos}");
             if(dragEndPos.x - dragBeginPos.x >= DRAGTHRESHOLD)
             {
-                SkipForward();
+                //SkipForward();
             }
             else if(dragEndPos.x - dragBeginPos.x <= -DRAGTHRESHOLD)
             {
-                SkipBack();
+                //SkipBack();
             }
         }
     }
