@@ -121,8 +121,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -769.82495, y: 115}
-  m_SizeDelta: {x: 39.740234, y: 195.63818}
+  m_AnchoredPosition: {x: -775.05054, y: 115}
+  m_SizeDelta: {x: 26.9683, y: 195.6382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5277914638876712719
 CanvasRenderer:
@@ -182,8 +182,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 20, y: 20}
-  m_Spacing: {x: 5, y: 10}
+  m_CellSize: {x: 10, y: 10}
+  m_Spacing: {x: 2, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &5277914638876712718
@@ -205,6 +205,7 @@ MonoBehaviour:
   - {fileID: 5277914639251433314}
   - {fileID: 5277914639254424324}
   - {fileID: 5277914639885498554}
+  rcmdNetwork: {fileID: 0}
 --- !u!1 &5277914639210022730
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,9 +340,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
@@ -1321,9 +1325,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
@@ -1966,9 +1973,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
@@ -2106,9 +2116,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
@@ -2323,9 +2336,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}
@@ -2621,9 +2637,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HoverToChangeAlpha: 1
+  HoverToChangeTextAlpha: 0
   HoverToChangeAllChildrenAlpha: 0
   HoverToDisplayCircleBG: 0
+  NoNeedToKeepClickStatus: 0
   PointerUpToDisplay: 0
+  ClickToChangeAlpha: 0
   ClickToChangeIcon: 0
   UnClickedIcon: {fileID: 0}
   ClikedIcon: {fileID: 0}

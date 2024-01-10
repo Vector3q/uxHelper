@@ -48,7 +48,7 @@ public class SliderAreaController : MonoBehaviour
             
             newObject.transform.SetParent(transform, false);
 
-            newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y + 110f * 0.002f, Rect.position.z);
+            newObject.transform.position = new Vector3(playSlider.handleRect.position.x, Rect.position.y + 80f * 0.002f, Rect.position.z);
 
             newObject.GetComponent<MarkCard>().createSelf(lines, speech, clip);
         }

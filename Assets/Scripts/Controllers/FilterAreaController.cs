@@ -7,6 +7,7 @@ public class FilterAreaController : MonoBehaviour
 {
     public GameObject FilterItemPrefab;
     private int ItemLength=0;
+    
 
     public void ResetFilterItems(int newLength)
     {

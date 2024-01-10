@@ -49,14 +49,34 @@ public class RcmdNetwork : MonoBehaviour
 
     public void FindMarkNode(Transform[] transforms)
     {
-    }
-    public void test(GameObject gameObject)
-    {
 
     }
-    public void ControlMarkNetwork(string text, bool status)
+    public void ControlMarkNetwork(string text, bool isClick)
     {
-        Debug.Log($"[RcmdNetwork] {text}  --  {status}" );
+        MarkNode targetnode;
+        foreach (MarkNode node in MarkNetwork)
+        {
+            if (node.tag == text)
+            {
+                targetnode = node;
+                foreach(GameObject gameObject in targetnode.attachedObject)
+                {
+                    if (isClick)
+                    {
+                        gameObject.SetActive(false);
+                        //Debug.Log($"[RcmdNetwork] {gameObject.name}  --  {gameObject.activeSelf}");
+                    }
+                    else
+                    {
+                        gameObject.SetActive(true);
+                        //Debug.Log($"[RcmdNetwork] {gameObject.name}  --  {gameObject.activeSelf}");
+                    }
+                }
+                break;
+            }
+            
+        }
+        //Debug.Log($"[RcmdNetwork] {text}  --  {isClick}" );
     }
     public void PrintMarkNetwork()
     {

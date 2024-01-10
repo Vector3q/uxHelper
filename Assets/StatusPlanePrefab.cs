@@ -56,7 +56,6 @@ public class StatusPlanePrefab : MonoBehaviour
             {
                 if (rcmdNetwork != null)
                 {
-                    rcmdNetwork.test(statusInfo[i].gameObject);
                     rcmdNetwork.AddMarkNode(tagi, statusInfo[i].gameObject);
                 }
             }
