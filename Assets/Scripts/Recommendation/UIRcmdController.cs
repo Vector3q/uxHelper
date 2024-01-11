@@ -11,7 +11,7 @@ public class UIRcmdController : MonoBehaviour
     private int mainVideo = -1;
     private List<Vector3> initialPos;
     private List<Quaternion> initialRot;
-    private Vector3 mainPos = new Vector3(0f, 0.5f, 0f);
+    private Vector3 mainPos = new Vector3(0f, 0.5f, -0.5f);
     private Vector3 mainRot = new Vector3(0f, 0f, 0f);
     // Start is called before the first frame update
     void Start()
