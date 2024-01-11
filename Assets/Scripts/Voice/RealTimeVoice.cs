@@ -24,13 +24,13 @@ public class RealTimeVoice : MonoBehaviour
 
     private string signa;
     public Text SpeechRecognitionText;
-    public AudioClip RecordedClip;
+    //public AudioClip RecordedClip;
     
     ClientWebSocket ws;
     CancellationToken ct;
 
     private int MAX_RECORD_LENGTH = 3599;
-    string[] _devicename;
+    //string[] _devicename;
     [HideInInspector]
     public AudioClip clipnow;
     /// <summary>
@@ -43,19 +43,19 @@ public class RealTimeVoice : MonoBehaviour
     {
 
         asrCallback += Output;
-        _devicename = Microphone.devices;
-        int _deviceLength = _devicename.Length;
-        if (_deviceLength == 0)
-        {
-            Debug.Log("cant find Microphone");
-        }
-        else
-        {
-            for (int i = 0; i < _deviceLength; i++)
-            {
-                Debug.Log($"find Microphone == {i}  " + _devicename[i]);
-            }
-        }
+        //_devicename = Microphone.devices;
+        //int _deviceLength = _devicename.Length;
+        //if (_deviceLength == 0)
+        //{
+        //    Debug.Log("cant find Microphone");
+        //}
+        //else
+        //{
+        //    for (int i = 0; i < _deviceLength; i++)
+        //    {
+        //        Debug.Log($"find Microphone == {i}  " + _devicename[i]);
+        //    }
+        //}
         
     }
 
@@ -72,11 +72,11 @@ public class RealTimeVoice : MonoBehaviour
             Debug.LogWarning("[Voice] start ASR fails, please wait for the last connection to end!");
             return;
         }
-        if(Microphone.devices.Length == 0)
-        {
-            Debug.LogError("[Voice] No accessible microphone!");
-            return;
-        }
+        //if(Microphone.devices.Length == 0)
+        //{
+        //    Debug.LogError("[Voice] No accessible microphone!");
+        //    return;
+        //}
         Debug.Log("[ASR] Start 2");
         ConnectASR_Aysnc();
         
@@ -88,15 +88,15 @@ public class RealTimeVoice : MonoBehaviour
         if(ws != null)
         {
             // close the coroutine of audio sending.
-            StopCoroutine(SendAudioClip());
+            //StopCoroutine(SendAudioClip());
             await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")),
                 WebSocketMessageType.Binary,
                 true, new CancellationToken());
 
-            clipnow = RecordedClip;
+            //clipnow = RecordedClip;
 
             //ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"end\": true}")), WebSocketMessageType.Binary, true, new CancellationToken());
-            Microphone.End(null);
+            //Microphone.End(null);
 
 
             StartCoroutine(StopRecord());
@@ -112,7 +112,7 @@ public class RealTimeVoice : MonoBehaviour
 
     async void ConnectASR_Aysnc()
     {
-        RecordedClip = Microphone.Start(_devicename[0], false, MAX_RECORD_LENGTH, 16000);
+        //RecordedClip = Microphone.Start(_devicename[0], false, MAX_RECORD_LENGTH, 16000);
         Debug.Log("[ASR] Start 3");
         ws = new ClientWebSocket();
         ct = new CancellationToken();
@@ -121,7 +121,7 @@ public class RealTimeVoice : MonoBehaviour
         Debug.Log("[ASR] Start 4");
         await ws.ConnectAsync(url, ct);
         Debug.Log("[ASR] Start 5");
-        StartCoroutine(SendAudioClip());
+        //StartCoroutine(SendAudioClip());
         Debug.Log("[ASR] Start 6");
         StringBuilder sb = new StringBuilder();
         while(ws.State == WebSocketState.Open)
@@ -175,44 +175,44 @@ public class RealTimeVoice : MonoBehaviour
         return new Uri(requestUrl);
     }
 
-    IEnumerator SendAudioClip()
-    {
-        yield return new WaitWhile(() => Microphone.GetPosition(null) <= 0);
-        float accumulatedTime = 0;
-        int position = Microphone.GetPosition(null);
-        const float waitTime = 0.04f;
-        const int maxlength = 1280;
-        int status = 0;
-        int lastPosition = Microphone.GetPosition(null);
-        while(position < RecordedClip.samples && ws.State == WebSocketState.Open)
-        {
-            accumulatedTime += waitTime;
-            if(accumulatedTime > MAX_RECORD_LENGTH)
-            {
-                Debug.Log("[Voice] Timed out");
-                break;
-            }
+    //IEnumerator SendAudioClip()
+    //{
+    //    yield return new WaitWhile(() => Microphone.GetPosition(null) <= 0);
+    //    float accumulatedTime = 0;
+    //    int position = Microphone.GetPosition(null);
+    //    const float waitTime = 0.04f;
+    //    const int maxlength = 1280;
+    //    int status = 0;
+    //    int lastPosition = Microphone.GetPosition(null);
+    //    while(position < RecordedClip.samples && ws.State == WebSocketState.Open)
+    //    {
+    //        accumulatedTime += waitTime;
+    //        if(accumulatedTime > MAX_RECORD_LENGTH)
+    //        {
+    //            Debug.Log("[Voice] Timed out");
+    //            break;
+    //        }
 
-            yield return new WaitForSecondsRealtime(waitTime);
+    //        yield return new WaitForSecondsRealtime(waitTime);
 
-            if (Microphone.IsRecording(null))
-            {
-                position = Microphone.GetPosition(null);
-            }
+    //        if (Microphone.IsRecording(null))
+    //        {
+    //            position = Microphone.GetPosition(null);
+    //        }
 
-            if (position <= lastPosition)
-            {
-                continue;
-            }
+    //        if (position <= lastPosition)
+    //        {
+    //            continue;
+    //        }
 
-            int length = position - lastPosition > maxlength ? maxlength : position - lastPosition;
-            byte[] data = GetAudioClip(lastPosition, length, RecordedClip);
+    //        int length = position - lastPosition > maxlength ? maxlength : position - lastPosition;
+    //        byte[] data = GetAudioClip(lastPosition, length, RecordedClip);
 
-            ws.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Binary, true, new CancellationToken());
-            lastPosition = lastPosition + length;
-            status = 1;
-        }
-    }
+    //        ws.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Binary, true, new CancellationToken());
+    //        lastPosition = lastPosition + length;
+    //        status = 1;
+    //    }
+    //}
     string AnalysisResult(JsonData jsonData)
     {
         Data result = JsonUtility.FromJson<Data>(jsonData.data);
