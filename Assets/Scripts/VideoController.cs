@@ -77,7 +77,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
-        videoPlayer.url = Application.streamingAssetsPath + "/" + "video_zeyu.mp4";
+        videoPlayer.url = Application.streamingAssetsPath + "/" + "video_zhongyue.mp4";
         videoPlayer.Play();
         videoPlayer.Prepare();
         videoPlayer.prepareCompleted += OnVideoPrepared;
