@@ -68,12 +68,21 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public Slider playSlider;
     public Button scissorsButton;
     public Button addComment;
+   
 
     PlayerSlider playerSlider;
     #endregion
 
 
-
+    void Awake()
+    {
+        videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer.url = Application.streamingAssetsPath + "/" + "video_zeyu.mp4";
+        videoPlayer.Play();
+        videoPlayer.Prepare();
+        videoPlayer.prepareCompleted += OnVideoPrepared;
+        Debug.Log($"[Video Path] {videoPlayer.aspectRatio}");
+    }
 
 
     // Start is called before the first frame update
@@ -82,12 +91,13 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         changedSecond = 0f;
         clickTime = 0f;
         clickCount = 0;
-        videoPlayer = GetComponent<VideoPlayer>();
+        
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
         addComment.onClick.AddListener(ClickToSpeak);
         playSlider.onValueChanged.AddListener(value => { if (subTime > 0.005f) videoPlayer.time = value * videoDuration; });
+        Debug.Log($"[Video Path] {Application.streamingAssetsPath + "/" + "video_zeyu.mp4"}");
         Setup();
-
+        
     }
 
     // Update is called once per frame
@@ -110,13 +120,20 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         }
 
     }
-
+    void OnVideoPrepared(VideoPlayer vp)
+    {
+        // 获取视频时长
+        videoDuration = (long)videoPlayer.frameCount / (long)videoPlayer.frameRate;
+        Debug.Log($"Count: {videoPlayer.frameCount} Rate: {videoPlayer.frameRate}");
+        Debug.Log("Video Duration: " + videoDuration + " seconds");
+    }
     // Set initial parameters
     void Setup()
     {
         videoPlayer.Pause();
         playbackSpeed = videoPlayer.playbackSpeed;
-        videoDuration = (float)videoPlayer.clip.length;
+        
+        
         //Debug.Log("videoPlayer.GetDirectAudioVolume(0)" + videoPlayer.GetDirectAudioVolume(0));
         //volumeSlider.value = videoPlayer.GetDirectAudioVolume(0);
         //Debug.Log("Volume: " + volumeSlider.value);

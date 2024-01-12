@@ -62,8 +62,8 @@ public class AddCommentIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
-        textPanel.transform.position = new Vector3(playSlider.handleRect.position.x, textPanel.transform.position.y, playSlider.handleRect.position.z);
+        //transform.position = new Vector3(playSlider.handleRect.position.x, playSlider.handleRect.position.y, playSlider.handleRect.position.z);
+        //textPanel.transform.position = new Vector3(playSlider.handleRect.position.x, textPanel.transform.position.y, playSlider.handleRect.position.z);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
