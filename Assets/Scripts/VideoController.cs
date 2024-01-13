@@ -44,7 +44,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private float clickCount;
     private float timerForHover;
     private bool isClicking = false;
-
+    private bool isPrepared = false;
     private Vector2 dragBeginPos;
     private Vector2 dragEndPos;
     private const float DRAGTHRESHOLD = 500f;
@@ -66,11 +66,20 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     // playback speed drop down
     public Dropdown pbSpeedDropDown;
     public Slider playSlider;
+    public Slider testSlider;
     public Button scissorsButton;
     public Button addComment;
    
+    
 
-    PlayerSlider playerSlider;
+    public Text FrameCount;
+    public Text FrameRate;
+    public Text VideoDuration;
+    public Text SliderValue;
+    public Text TestSliderValue;
+    public Text VideoTime;
+    public Text FrameNow;
+    public Text CanSetTime;
     #endregion
 
 
@@ -94,7 +103,6 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         
         pbSpeedDropDown.onValueChanged.AddListener(SelectPlaybackSpeed);
         addComment.onClick.AddListener(ClickToSpeak);
-        playSlider.onValueChanged.AddListener(value => { if (subTime > 0.005f) videoPlayer.time = value * videoDuration; });
         Debug.Log($"[Video Path] {Application.streamingAssetsPath + "/" + "video_zeyu.mp4"}");
         Setup();
         
@@ -104,20 +112,21 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     void Update()
     {
         timerForHover += Time.deltaTime;
+
+        SliderValue.text = "SliderValue: \n" + (playSlider.value).ToString();
+        if (isPrepared)
+        {
+            FrameCount.text = $"FrameCount: \n{videoPlayer.frameCount}";
+            FrameRate.text = "FrameRate: \n" + ((long)videoPlayer.frameRate).ToString();
+            VideoDuration.text = "Duration: \n" + ((long)videoPlayer.frameCount / (long)videoPlayer.frameRate).ToString();
+            TestSliderValue.text = "TestValue: \n" + testSlider.value;
+            VideoTime.text = "VideoTime: \n" + videoPlayer.time;
+            FrameNow.text = "FrameNow: \n" + videoPlayer.frame;
+            CanSetTime.text = "CanSetTime: \n" + videoPlayer.canSetTime.ToString();
+        }
         
         updateTimeText();
         UpdateTimeSet();
-        if (playSlider.gameObject.activeSelf == true)
-        {
-            playerSlider = playSlider.GetComponent<PlayerSlider>();
-            //videoPlayer.time = playerSlider.getSliderValue() * videoDuration;
-            subTime = Mathf.Abs(playerSlider.getSliderValue() - changedSecond);
-
-            
-            if (subTime < 0.005f)
-                playerSlider.setSliderValue((float)videoPlayer.time / videoDuration);
-            changedSecond = playerSlider.getSliderValue();
-        }
 
     }
     void OnVideoPrepared(VideoPlayer vp)
@@ -126,6 +135,11 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         videoDuration = (long)videoPlayer.frameCount / (long)videoPlayer.frameRate;
         Debug.Log($"Count: {videoPlayer.frameCount} Rate: {videoPlayer.frameRate}");
         Debug.Log("Video Duration: " + videoDuration + " seconds");
+        FrameCount.text = "FrameCount: \n" + ((long)videoPlayer.frameCount).ToString();
+        FrameRate.text = "FrameRate: \n" + ((long)videoPlayer.frameRate).ToString();
+        VideoDuration.text = "FrameRate: \n" + ((long)videoPlayer.frameCount / (long)videoPlayer.frameRate).ToString();
+        
+        isPrepared = true;
     }
     // Set initial parameters
     void Setup()
@@ -266,6 +280,11 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         videoPlayer.time = newTime;
     }
 
+    public void SetPlayTimeByRatio(double ratio)
+    {
+        videoPlayer.time = ratio * videoDuration;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         timerForHover = 0f;
@@ -350,7 +369,7 @@ public class VideoController : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private void StartWaitForInstruction()
     {
 
-        addComment.gameObject.SetActive(true);
+        //addComment.gameObject.SetActive(true);
 
     }
 

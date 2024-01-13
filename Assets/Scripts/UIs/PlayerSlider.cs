@@ -2,16 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
+using UnityEngine.EventSystems;
 
-public class PlayerSlider : MonoBehaviour
+public class PlayerSlider : MonoBehaviour, IEndDragHandler, IBeginDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    
     // Start is called before the first frame update
-    public GameObject mainVideo;
+    public VideoPlayer mainVideo;
     public Slider playSlider;
     public GameObject fillPrefab;
     public GameObject fill;
     public Canvas canvas;
+    public bool isDrag;
+    public bool isClick;
+    private bool playStatus = false;
+    
+
+    
     UIResize uIResize;
+
+
+    public Text GiveTime;
     void Start()
     {
         playSlider = GetComponent<Slider>();
@@ -27,7 +39,7 @@ public class PlayerSlider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateWithVideo();
     }
 
     public void setSliderValue(float value)
@@ -39,7 +51,61 @@ public class PlayerSlider : MonoBehaviour
     {
         return playSlider.value;
     }
+    public void UpdateWithVideo()
+    {
+        
+        if (!isDrag && !isClick && mainVideo.isPlaying)
+        {
+            // update slider value 
+            playSlider.value = (float)mainVideo.time / ((long)mainVideo.frameCount / (long)mainVideo.frameRate);
+        }
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDrag = false;
 
+        // update video time
+        
+        mainVideo.frame = (long)(playSlider.value * (long)mainVideo.frameCount);
+        GiveTime.text = "GiveTime: \n" + ((long)mainVideo.frameCount / (long)mainVideo.frameRate) * playSlider.value;
+        if (playStatus)
+        {
+            mainVideo.Play();
+        }
+
+
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        isDrag = true;
+        playStatus = mainVideo.isPlaying;
+        mainVideo.Pause();
+        
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        isClick = true;
+        playStatus = mainVideo.isPlaying;
+
+        mainVideo.Pause();
+        // update video time
+        //mainVideo.time = ((long)mainVideo.frameCount / (long)mainVideo.frameRate) * playSlider.value;
+        mainVideo.frame = (long)(playSlider.value * (long)mainVideo.frameCount);
+        GiveTime.text = "GiveTime: \n" + ((long)mainVideo.frameCount / (long)mainVideo.frameRate) * playSlider.value;
+        isClick = false;
+        if (playStatus)
+        {
+            mainVideo.Play();
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+
+
+    }
     public void CreateFillPrefab(float startValue, float endValue)
     {
         if (playSlider != null && fillPrefab != null)
@@ -67,4 +133,5 @@ public class PlayerSlider : MonoBehaviour
     }
 
 
+    
 }
