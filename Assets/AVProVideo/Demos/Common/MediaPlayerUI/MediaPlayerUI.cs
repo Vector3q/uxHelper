@@ -83,6 +83,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		private bool _isAudioFadingUpToPlay = true;
 		private const float AudioFadeDuration = 0.25f;
 		private float _audioFadeTime = 0f;
+		private float factor = 0f;
 
 		private readonly LazyShaderProperty _propMorph = new LazyShaderProperty("_Morph");
 		private readonly LazyShaderProperty _propMute = new LazyShaderProperty("_Mute");
@@ -755,15 +756,17 @@ namespace RenderHeads.Media.AVProVideo.Demos
 						_segmentsSeek.gameObject.SetActive(true);
 						_timelineTip.gameObject.SetActive(true);
 						Vector3 mousePos = _canvasTransform.TransformPoint(canvasPos);
-
+						
 						_timelineTip.position = new Vector2(mousePos.x, _timelineTip.position.y);
 
 						if (UserInteraction.IsUserInputThisFrame())
 						{
 							// Work out position on the timeline
 							Bounds bounds = RectTransformUtility.CalculateRelativeRectTransformBounds(this._sliderTime.GetComponent<RectTransform>());
-							float x = Mathf.Clamp01((canvasPos.x - bounds.min.x) / bounds.size.x);
-							Debug.Log($"[MediaPlayerUI] canvas: {canvasPos.x} bounds: {bounds.min.x}");
+							factor = (_canvasTransform.anchoredPosition.x * 2) / 1280f;
+							float x = Mathf.Clamp01((canvasPos.x + 640f)/ (bounds.size.x));
+							
+							Debug.Log($"[MediaPlayerUI] canvas.x {canvasPos.x} canvas: {canvasPos.x + _canvasTransform.anchoredPosition.x} canvas size: {_canvasTransform.anchoredPosition.x} bounds size: {bounds.size.x / 2}");
 							double time = (double)x * timelineRange.Duration;
 
 							// Seek to the new position
